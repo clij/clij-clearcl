@@ -132,7 +132,7 @@ if (JavaVersion.current().isJava8Compatible()) {
 // PUBLISHING
 
 group   = project.ext.groupname
-version = "0.7.1-m"
+version = "0.7.2-m"
 
 artifacts
 {
