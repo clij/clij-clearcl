@@ -13,9 +13,9 @@ import net.haesleinhuepf.clij.clearcl.enums.ImageChannelDataType;
 import net.haesleinhuepf.clij.clearcl.exceptions.ClearCLProgramNotBuiltException;
 import net.haesleinhuepf.clij.clearcl.ocllib.OCLlib;
 import net.haesleinhuepf.clij.clearcl.util.StringUtils;
-import coremem.rgc.Cleanable;
-import coremem.rgc.Cleaner;
-import coremem.rgc.RessourceCleaner;
+import net.haesleinhuepf.clij.coremem.rgc.Cleanable;
+import net.haesleinhuepf.clij.coremem.rgc.Cleaner;
+import net.haesleinhuepf.clij.coremem.rgc.RessourceCleaner;
 
 /**
  * ClearCLProgram is the ClearCL abstraction for OpenCl programs.

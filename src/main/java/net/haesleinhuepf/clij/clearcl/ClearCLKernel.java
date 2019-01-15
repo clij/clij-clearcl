@@ -14,10 +14,10 @@ import net.haesleinhuepf.clij.clearcl.exceptions.ClearCLInvalidExecutionRange;
 import net.haesleinhuepf.clij.clearcl.exceptions.ClearCLUnknownArgumentNameException;
 import net.haesleinhuepf.clij.clearcl.interfaces.ClearCLImageInterface;
 import net.haesleinhuepf.clij.clearcl.util.ElapsedTime;
-import coremem.enums.NativeTypeEnum;
-import coremem.rgc.Cleanable;
-import coremem.rgc.Cleaner;
-import coremem.rgc.RessourceCleaner;
+import net.haesleinhuepf.clij.coremem.enums.NativeTypeEnum;
+import net.haesleinhuepf.clij.coremem.rgc.Cleanable;
+import net.haesleinhuepf.clij.coremem.rgc.Cleaner;
+import net.haesleinhuepf.clij.coremem.rgc.RessourceCleaner;
 
 /**
  * ClearCLKernel is the ClearCL abstraction for OpenCL kernels.

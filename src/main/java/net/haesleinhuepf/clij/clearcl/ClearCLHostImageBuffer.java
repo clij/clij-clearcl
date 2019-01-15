@@ -7,10 +7,10 @@ import net.haesleinhuepf.clij.clearcl.abs.ClearCLMemBase;
 import net.haesleinhuepf.clij.clearcl.enums.HostAccessType;
 import net.haesleinhuepf.clij.clearcl.interfaces.ClearCLImageInterface;
 import net.haesleinhuepf.clij.clearcl.interfaces.ClearCLMemInterface;
-import coremem.ContiguousMemoryInterface;
-import coremem.enums.NativeTypeEnum;
-import coremem.offheap.OffHeapMemory;
-import coremem.util.Size;
+import net.haesleinhuepf.clij.coremem.ContiguousMemoryInterface;
+import net.haesleinhuepf.clij.coremem.enums.NativeTypeEnum;
+import net.haesleinhuepf.clij.coremem.offheap.OffHeapMemory;
+import net.haesleinhuepf.clij.coremem.util.Size;
 
 /**
  * ClearCLHostImageBuffer is the ClearCL abstraction for CPU RAM images.

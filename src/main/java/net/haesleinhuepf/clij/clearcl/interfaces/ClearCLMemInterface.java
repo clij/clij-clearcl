@@ -5,7 +5,7 @@ import net.haesleinhuepf.clij.clearcl.ClearCLQueue;
 import net.haesleinhuepf.clij.clearcl.enums.HostAccessType;
 import net.haesleinhuepf.clij.clearcl.enums.KernelAccessType;
 import net.haesleinhuepf.clij.clearcl.enums.MemAllocMode;
-import coremem.interfaces.SizedInBytes;
+import net.haesleinhuepf.clij.coremem.interfaces.SizedInBytes;
 
 /**
  * Interface for all mem objects

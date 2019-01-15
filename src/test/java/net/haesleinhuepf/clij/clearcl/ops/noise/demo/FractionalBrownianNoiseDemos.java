@@ -14,7 +14,7 @@ import net.haesleinhuepf.clij.clearcl.enums.MemAllocMode;
 import net.haesleinhuepf.clij.clearcl.ops.noise.FractionalBrownianNoise;
 import net.haesleinhuepf.clij.clearcl.util.ElapsedTime;
 import net.haesleinhuepf.clij.clearcl.viewer.ClearCLImageViewer;
-import coremem.enums.NativeTypeEnum;
+import net.haesleinhuepf.clij.coremem.enums.NativeTypeEnum;
 
 import org.junit.Test;
 

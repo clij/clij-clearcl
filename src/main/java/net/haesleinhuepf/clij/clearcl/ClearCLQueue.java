@@ -2,9 +2,9 @@ package net.haesleinhuepf.clij.clearcl;
 
 import net.haesleinhuepf.clij.clearcl.abs.ClearCLBase;
 import net.haesleinhuepf.clij.clearcl.backend.ClearCLBackendInterface;
-import coremem.rgc.Cleanable;
-import coremem.rgc.Cleaner;
-import coremem.rgc.RessourceCleaner;
+import net.haesleinhuepf.clij.coremem.rgc.Cleanable;
+import net.haesleinhuepf.clij.coremem.rgc.Cleaner;
+import net.haesleinhuepf.clij.coremem.rgc.RessourceCleaner;
 
 /**
  * ClearCLQueue is the ClearCL abstraction for OpenCl queues.

@@ -12,8 +12,8 @@ import net.haesleinhuepf.clij.clearcl.enums.ImageChannelOrder;
 import net.haesleinhuepf.clij.clearcl.enums.ImageType;
 import net.haesleinhuepf.clij.clearcl.enums.KernelAccessType;
 import net.haesleinhuepf.clij.clearcl.enums.MemAllocMode;
-import coremem.ContiguousMemoryInterface;
-import coremem.fragmented.FragmentedMemoryInterface;
+import net.haesleinhuepf.clij.coremem.ContiguousMemoryInterface;
+import net.haesleinhuepf.clij.coremem.fragmented.FragmentedMemoryInterface;
 
 /**
  * ClearCL backend interface

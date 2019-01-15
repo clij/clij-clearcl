@@ -5,8 +5,8 @@ import java.nio.Buffer;
 import net.haesleinhuepf.clij.clearcl.ClearCLBuffer;
 import net.haesleinhuepf.clij.clearcl.ClearCLImage;
 import net.haesleinhuepf.clij.clearcl.backend.ClearCLBackendInterface;
-import coremem.ContiguousMemoryInterface;
-import coremem.enums.NativeTypeEnum;
+import net.haesleinhuepf.clij.coremem.ContiguousMemoryInterface;
+import net.haesleinhuepf.clij.coremem.enums.NativeTypeEnum;
 
 /**
  *

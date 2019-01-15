@@ -37,9 +37,9 @@ import net.haesleinhuepf.clij.clearcl.enums.ImageType;
 import net.haesleinhuepf.clij.clearcl.enums.KernelAccessType;
 import net.haesleinhuepf.clij.clearcl.enums.MemAllocMode;
 import net.haesleinhuepf.clij.clearcl.exceptions.ClearCLUnsupportedException;
-import coremem.ContiguousMemoryInterface;
-import coremem.fragmented.FragmentedMemoryInterface;
-import coremem.util.Size;
+import net.haesleinhuepf.clij.coremem.ContiguousMemoryInterface;
+import net.haesleinhuepf.clij.coremem.fragmented.FragmentedMemoryInterface;
+import net.haesleinhuepf.clij.coremem.util.Size;
 
 import org.jocl.CL;
 import org.jocl.Pointer;

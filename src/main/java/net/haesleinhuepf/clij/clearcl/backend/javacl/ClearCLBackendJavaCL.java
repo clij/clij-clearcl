@@ -31,9 +31,9 @@ import com.nativelibs4java.opencl.library.OpenCLLibrary;
 import com.nativelibs4java.opencl.library.cl_image_desc;
 import com.nativelibs4java.opencl.library.cl_image_format;
 
-import coremem.ContiguousMemoryInterface;
-import coremem.fragmented.FragmentedMemoryInterface;
-import coremem.util.Size;
+import net.haesleinhuepf.clij.coremem.ContiguousMemoryInterface;
+import net.haesleinhuepf.clij.coremem.fragmented.FragmentedMemoryInterface;
+import net.haesleinhuepf.clij.coremem.util.Size;
 
 import org.bridj.Pointer;
 import org.bridj.Pointer.StringType;

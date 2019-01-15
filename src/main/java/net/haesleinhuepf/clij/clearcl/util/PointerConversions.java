@@ -1,6 +1,6 @@
 package net.haesleinhuepf.clij.clearcl.util;
 
-import coremem.offheap.OffHeapMemory;
+import net.haesleinhuepf.clij.coremem.offheap.OffHeapMemory;
 
 /**
  *

@@ -7,8 +7,8 @@ import net.haesleinhuepf.clij.clearcl.ClearCLContext;
 import net.haesleinhuepf.clij.clearcl.enums.HostAccessType;
 import net.haesleinhuepf.clij.clearcl.enums.KernelAccessType;
 import net.haesleinhuepf.clij.clearcl.enums.MemAllocMode;
-import coremem.enums.NativeTypeEnum;
-import coremem.offheap.OffHeapMemory;
+import net.haesleinhuepf.clij.coremem.enums.NativeTypeEnum;
+import net.haesleinhuepf.clij.coremem.offheap.OffHeapMemory;
 
 /**
  *

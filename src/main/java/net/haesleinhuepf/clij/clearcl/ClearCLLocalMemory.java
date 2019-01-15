@@ -1,8 +1,8 @@
 package net.haesleinhuepf.clij.clearcl;
 
-import coremem.enums.NativeTypeEnum;
-import coremem.interfaces.SizedInBytes;
-import coremem.util.Size;
+import net.haesleinhuepf.clij.coremem.enums.NativeTypeEnum;
+import net.haesleinhuepf.clij.coremem.interfaces.SizedInBytes;
+import net.haesleinhuepf.clij.coremem.util.Size;
 
 /**
  * ClearCLLocalMemory is the ClearCL abstraction for local memory passed to

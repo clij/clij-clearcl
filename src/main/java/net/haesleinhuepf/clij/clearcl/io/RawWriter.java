@@ -11,10 +11,10 @@ import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 
 import net.haesleinhuepf.clij.clearcl.interfaces.ClearCLImageInterface;
-import coremem.buffers.ContiguousBuffer;
-import coremem.enums.NativeTypeEnum;
-import coremem.offheap.OffHeapMemory;
-import coremem.util.Size;
+import net.haesleinhuepf.clij.coremem.buffers.ContiguousBuffer;
+import net.haesleinhuepf.clij.coremem.enums.NativeTypeEnum;
+import net.haesleinhuepf.clij.coremem.offheap.OffHeapMemory;
+import net.haesleinhuepf.clij.coremem.util.Size;
 
 /**
  * Image raw writer

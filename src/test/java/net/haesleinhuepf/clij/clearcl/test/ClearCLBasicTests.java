@@ -25,8 +25,8 @@ import net.haesleinhuepf.clij.clearcl.enums.ImageChannelDataType;
 import net.haesleinhuepf.clij.clearcl.enums.ImageChannelOrder;
 import net.haesleinhuepf.clij.clearcl.enums.KernelAccessType;
 import net.haesleinhuepf.clij.clearcl.exceptions.OpenCLException;
-import coremem.enums.NativeTypeEnum;
-import coremem.offheap.OffHeapMemory;
+import net.haesleinhuepf.clij.coremem.enums.NativeTypeEnum;
+import net.haesleinhuepf.clij.coremem.offheap.OffHeapMemory;
 
 import org.junit.Test;
 

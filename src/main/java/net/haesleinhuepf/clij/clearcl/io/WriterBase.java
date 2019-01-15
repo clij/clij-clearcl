@@ -1,6 +1,6 @@
 package net.haesleinhuepf.clij.clearcl.io;
 
-import coremem.enums.NativeTypeEnum;
+import net.haesleinhuepf.clij.coremem.enums.NativeTypeEnum;
 
 /**
  * This base class provides common fields and methods needed by implementations

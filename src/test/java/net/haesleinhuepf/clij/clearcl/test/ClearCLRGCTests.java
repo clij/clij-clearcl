@@ -8,8 +8,8 @@ import net.haesleinhuepf.clij.clearcl.backend.ClearCLBackendInterface;
 import net.haesleinhuepf.clij.clearcl.backend.ClearCLBackends;
 import net.haesleinhuepf.clij.clearcl.enums.BuildStatus;
 import net.haesleinhuepf.clij.clearcl.enums.ImageChannelDataType;
-import coremem.enums.NativeTypeEnum;
-import coremem.rgc.RessourceCleaner;
+import net.haesleinhuepf.clij.coremem.enums.NativeTypeEnum;
+import net.haesleinhuepf.clij.coremem.rgc.RessourceCleaner;
 
 import net.haesleinhuepf.clij.clearcl.*;
 import org.junit.Test;

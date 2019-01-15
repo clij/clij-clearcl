@@ -13,7 +13,7 @@ import net.haesleinhuepf.clij.clearcl.enums.ImageType;
 import net.haesleinhuepf.clij.clearcl.enums.KernelAccessType;
 import net.haesleinhuepf.clij.clearcl.enums.MemAllocMode;
 import net.haesleinhuepf.clij.clearcl.exceptions.ClearCLUnsupportedException;
-import coremem.ContiguousMemoryInterface;
+import net.haesleinhuepf.clij.coremem.ContiguousMemoryInterface;
 
 /**
  * ClearCL backend base class providing common fields and methods for al

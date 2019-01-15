@@ -14,7 +14,7 @@ import net.haesleinhuepf.clij.clearcl.enums.ImageChannelDataType;
 import net.haesleinhuepf.clij.clearcl.ocllib.OCLlib;
 import net.haesleinhuepf.clij.clearcl.test.ClearCLBasicTests;
 import net.haesleinhuepf.clij.clearcl.viewer.ClearCLImageViewer;
-import coremem.offheap.OffHeapMemory;
+import net.haesleinhuepf.clij.coremem.offheap.OffHeapMemory;
 
 import org.junit.Test;
 

@@ -19,7 +19,7 @@ import net.haesleinhuepf.clij.clearcl.exceptions.ClearCLArgumentMissingException
 import net.haesleinhuepf.clij.clearcl.selector.BadDeviceSelector;
 import net.haesleinhuepf.clij.clearcl.selector.DeviceTypeSelector;
 import net.haesleinhuepf.clij.clearcl.selector.GlobalMemorySelector;
-import coremem.enums.NativeTypeEnum;
+import net.haesleinhuepf.clij.coremem.enums.NativeTypeEnum;
 
 import org.junit.Test;
 

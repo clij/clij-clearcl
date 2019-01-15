@@ -14,8 +14,8 @@ import net.haesleinhuepf.clij.clearcl.enums.ImageChannelDataType;
 import net.haesleinhuepf.clij.clearcl.enums.ImageChannelOrder;
 import net.haesleinhuepf.clij.clearcl.enums.KernelAccessType;
 import net.haesleinhuepf.clij.clearcl.util.Region3;
-import coremem.fragmented.FragmentedMemory;
-import coremem.offheap.OffHeapMemory;
+import net.haesleinhuepf.clij.coremem.fragmented.FragmentedMemory;
+import net.haesleinhuepf.clij.coremem.offheap.OffHeapMemory;
 
 import org.junit.Test;
 

@@ -89,8 +89,8 @@
 
 	<properties>
 		<package-name>net.haesleinhuepf</package-name>
-		<license.licenseName>bsd_3</license.licenseName>
-		<license.copyrightOwners>Robert Haase, MPI CBG</license.copyrightOwners>
+		<license.licenseName>lgpl_3</license.licenseName>
+		<license.copyrightOwners>Loic A. Royer, CZ Biohub, Robert Haase, MPI CBG</license.copyrightOwners>
 		<imagej.app.directory>C:/programs/fiji-win64/Fiji.app/</imagej.app.directory>
 		<!--<imagej.app.directory>/home/rhaase/programs/fiji/Fiji.app/</imagej.app.directory>-->
 	</properties>
@@ -98,7 +98,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>net.clearcontrol</groupId>
-			<artifactId>coremem</artifactId>
+			<artifactId>clij-coremem</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>junit</groupId>

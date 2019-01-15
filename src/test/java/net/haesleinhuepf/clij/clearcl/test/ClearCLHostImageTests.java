@@ -6,7 +6,7 @@ import net.haesleinhuepf.clij.clearcl.ClearCL;
 import net.haesleinhuepf.clij.clearcl.ClearCLDevice;
 import net.haesleinhuepf.clij.clearcl.ClearCLHostImageBuffer;
 import net.haesleinhuepf.clij.clearcl.backend.jocl.ClearCLBackendJOCL;
-import coremem.enums.NativeTypeEnum;
+import net.haesleinhuepf.clij.coremem.enums.NativeTypeEnum;
 
 import org.junit.Test;
 

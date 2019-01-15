@@ -11,10 +11,10 @@ import net.haesleinhuepf.clij.clearcl.enums.ImageType;
 import net.haesleinhuepf.clij.clearcl.enums.KernelAccessType;
 import net.haesleinhuepf.clij.clearcl.enums.MemAllocMode;
 import net.haesleinhuepf.clij.clearcl.exceptions.OpenCLException;
-import coremem.enums.NativeTypeEnum;
-import coremem.rgc.Cleanable;
-import coremem.rgc.Cleaner;
-import coremem.rgc.RessourceCleaner;
+import net.haesleinhuepf.clij.coremem.enums.NativeTypeEnum;
+import net.haesleinhuepf.clij.coremem.rgc.Cleanable;
+import net.haesleinhuepf.clij.coremem.rgc.Cleaner;
+import net.haesleinhuepf.clij.coremem.rgc.RessourceCleaner;
 
 /**
  * ClearCLContext is the ClearCL abstraction for OpenCl contexts.

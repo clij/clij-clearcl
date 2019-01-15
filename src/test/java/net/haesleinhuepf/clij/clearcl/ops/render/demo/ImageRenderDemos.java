@@ -15,7 +15,7 @@ import net.haesleinhuepf.clij.clearcl.ops.render.ImageRender;
 import net.haesleinhuepf.clij.clearcl.ops.render.enums.Algorithm;
 import net.haesleinhuepf.clij.clearcl.util.Region2;
 import net.haesleinhuepf.clij.clearcl.viewer.ClearCLImageViewer;
-import coremem.enums.NativeTypeEnum;
+import net.haesleinhuepf.clij.coremem.enums.NativeTypeEnum;
 
 import org.junit.Test;
 

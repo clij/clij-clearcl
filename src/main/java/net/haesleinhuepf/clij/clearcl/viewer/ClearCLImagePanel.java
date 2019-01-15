@@ -41,8 +41,8 @@ import net.haesleinhuepf.clij.clearcl.ops.math.MinMax;
 import net.haesleinhuepf.clij.clearcl.util.ElapsedTime;
 import net.haesleinhuepf.clij.clearcl.util.Region2;
 import net.haesleinhuepf.clij.clearcl.viewer.jfx.DirectWritableImage;
-import coremem.ContiguousMemoryInterface;
-import coremem.enums.NativeTypeEnum;
+import net.haesleinhuepf.clij.coremem.ContiguousMemoryInterface;
+import net.haesleinhuepf.clij.coremem.enums.NativeTypeEnum;
 
 /**
  * JavaFX Panel for displaying the contents of a ClearCLImage.

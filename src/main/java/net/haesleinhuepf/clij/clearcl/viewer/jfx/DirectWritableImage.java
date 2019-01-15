@@ -7,7 +7,7 @@ import java.lang.reflect.Method;
 import java.nio.ByteBuffer;
 import javafx.scene.image.WritableImage;
 
-import coremem.ContiguousMemoryInterface;
+import net.haesleinhuepf.clij.coremem.ContiguousMemoryInterface;
 
 /**
  * Direct writable image

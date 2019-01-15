@@ -14,8 +14,8 @@ import net.haesleinhuepf.clij.clearcl.enums.KernelAccessType;
 import net.haesleinhuepf.clij.clearcl.interfaces.ClearCLImageInterface;
 import net.haesleinhuepf.clij.clearcl.ocllib.OCLlib;
 import net.haesleinhuepf.clij.clearcl.ops.OpsBase;
-import coremem.buffers.ContiguousBuffer;
-import coremem.enums.NativeTypeEnum;
+import net.haesleinhuepf.clij.coremem.buffers.ContiguousBuffer;
+import net.haesleinhuepf.clij.coremem.enums.NativeTypeEnum;
 
 /**
  * Computes the min max values of an image of buffer.

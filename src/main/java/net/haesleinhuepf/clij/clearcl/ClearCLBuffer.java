@@ -13,12 +13,12 @@ import net.haesleinhuepf.clij.clearcl.exceptions.ClearCLHostAccessException;
 import net.haesleinhuepf.clij.clearcl.interfaces.ClearCLImageInterface;
 import net.haesleinhuepf.clij.clearcl.interfaces.ClearCLMemInterface;
 import net.haesleinhuepf.clij.clearcl.util.Region3;
-import coremem.ContiguousMemoryInterface;
-import coremem.enums.NativeTypeEnum;
-import coremem.rgc.Cleanable;
-import coremem.rgc.Cleaner;
-import coremem.rgc.RessourceCleaner;
-import coremem.util.Size;
+import net.haesleinhuepf.clij.coremem.ContiguousMemoryInterface;
+import net.haesleinhuepf.clij.coremem.enums.NativeTypeEnum;
+import net.haesleinhuepf.clij.coremem.rgc.Cleanable;
+import net.haesleinhuepf.clij.coremem.rgc.Cleaner;
+import net.haesleinhuepf.clij.coremem.rgc.RessourceCleaner;
+import net.haesleinhuepf.clij.coremem.util.Size;
 
 /**
  * ClearCLBuffer is the ClearCL abstraction for OpenCL buffers.

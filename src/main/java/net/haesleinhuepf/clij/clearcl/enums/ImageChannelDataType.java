@@ -1,6 +1,6 @@
 package net.haesleinhuepf.clij.clearcl.enums;
 
-import coremem.enums.NativeTypeEnum;
+import net.haesleinhuepf.clij.coremem.enums.NativeTypeEnum;
 
 /**
  * OpenCL image channel data type
