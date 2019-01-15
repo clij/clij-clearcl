@@ -40,13 +40,13 @@ IMPORTANT NOTE: ClearCL has been moved from the ClearVolume org to the ClearCont
 
 ### With Gradle:
 ~~~~
-     compile 'net.clearcontrol:clearcl:0.6.0'
+     compile 'net.clearcontrol:clij-clearcl:0.8.0'
 ~~~~
 
 ~~~~
 repositories {
     maven {
-        url  "http://dl.bintray.com/clearcontrol/ClearControl" 
+        url  "http://dl.bintray.com/haesleinhuepf/clij" 
     }
 }
 ~~~~
@@ -55,8 +55,8 @@ repositories {
 ~~~~
 <dependency>
   <groupId>net.clearcontrol</groupId>
-  <artifactId>clearcl</artifactId>
-  <version>0.6.0</version>
+  <artifactId>clij-clearcl</artifactId>
+  <version>0.8.0</version>
   <type>pom</type>
 </dependency>
 ~~~~
@@ -66,15 +66,15 @@ repositories {
      <snapshots>
          <enabled>false</enabled>
      </snapshots>
-     <id>bintray-clearvolume-ClearVolume</id>
+     <id>bintray-haesleinhuepf-clij</id>
      <name>bintray</name>
-     <url>http://dl.bintray.com/clearcontrol/ClearControl</url>
+     <url>http://dl.bintray.com/haesleinhuepf/clij</url>
  </repository>
 ~~~~
 
 ## Getting started:
 
-Just check the tests [here](https://github.com/ClearVolume/ClearCL/blob/master/src/java/clearcl/test/ClearCLTests.java) to learn how to use ClearCL. More tests are coming...
+Just check the tests [here](blob/master/src/java/clearcl/test/ClearCLTests.java) to learn how to use ClearCL. More tests are coming...
 
 
 ## Example:
