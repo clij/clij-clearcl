@@ -14,3 +14,4 @@ clearcl.iml
 *.iml
 /out/
 codeformat.eclipse.xml
+/target/
