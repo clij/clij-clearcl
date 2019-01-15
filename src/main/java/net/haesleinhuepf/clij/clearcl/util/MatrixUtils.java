@@ -1,6 +1,6 @@
 package net.haesleinhuepf.clij.clearcl.util;
 
-import javax.vecmath.Matrix4f;
+import org.scijava.vecmath.Matrix4f;
 
 import net.haesleinhuepf.clij.clearcl.ClearCLBuffer;
 import net.haesleinhuepf.clij.clearcl.ClearCLContext;

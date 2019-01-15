@@ -2,7 +2,7 @@ package net.haesleinhuepf.clij.clearcl.ops.render;
 
 import java.util.concurrent.ConcurrentHashMap;
 
-import javax.vecmath.Matrix4f;
+import org.scijava.vecmath.Matrix4f;
 
 import net.haesleinhuepf.clij.clearcl.ClearCLBuffer;
 import net.haesleinhuepf.clij.clearcl.ClearCLImage;
