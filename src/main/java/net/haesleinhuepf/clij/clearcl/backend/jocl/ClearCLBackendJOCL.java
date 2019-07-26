@@ -419,7 +419,8 @@ public class ClearCLBackendJOCL extends ClearCLBackendBase
       return lClearCLPeerPointer;
     }
     if (lDeviceVersion.contains("1.2")
-        || lDeviceVersion.contains("2.0"))
+            || lDeviceVersion.contains("2.0")
+            || lDeviceVersion.contains("2.1"))
     {
 
       final cl_image_format lImageFormat = new cl_image_format();
