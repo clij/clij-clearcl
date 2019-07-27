@@ -19,6 +19,7 @@ import net.haesleinhuepf.clij.coremem.rgc.Cleanable;
 import net.haesleinhuepf.clij.coremem.rgc.Cleaner;
 import net.haesleinhuepf.clij.coremem.rgc.RessourceCleaner;
 import net.haesleinhuepf.clij.coremem.util.Size;
+import org.jocl.Pointer;
 
 /**
  * ClearCLBuffer is the ClearCL abstraction for OpenCL buffers.
@@ -515,7 +516,10 @@ public class ClearCLBuffer extends ClearCLMemBase implements
            * getPixelSizeInBytes() > getSizeInBytes())
       throw new ClearCLException("Incompatible length");
 
-    ClearCLPeerPointer lHostMemPointer = getBackend().wrap(pBuffer);
+    //ClearCLPeerPointer lHostMemPointer = getBackend().wrap(pBuffer);
+    System.out.println("QueuePointeR: " + mClearCLContext.getDefaultQueue().getPeerPointer().getPointer());
+    //System.out.println("HostMemPointer: " + lHostMemPointer.getPointer());
+    System.out.println("PeerPointer: " + getPeerPointer().getPointer());
 
     getBackend().enqueueWriteToBuffer(mClearCLContext.getDefaultQueue()
                                                      .getPeerPointer(),
@@ -523,7 +527,7 @@ public class ClearCLBuffer extends ClearCLMemBase implements
                                       pBlockingRead,
                                       pOffsetInBuffer * getNativeType().getSizeInBytes(),
                                       pLengthInBuffer * getNativeType().getSizeInBytes(),
-                                      lHostMemPointer);
+                                      new ClearCLPeerPointer(Pointer.toBuffer(pBuffer)));
     notifyListenersOfChange(mClearCLContext.getDefaultQueue());
   }
 

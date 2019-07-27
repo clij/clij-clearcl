@@ -1115,6 +1115,7 @@ public class ClearCLBackendJOCL extends ClearCLBackendBase
   public void releaseBuffer(final ClearCLPeerPointer pPeerPointer)
   {
     BackendUtils.checkExceptions(() -> {
+      System.out.println("Releasing " + pPeerPointer.getPointer());
       BackendUtils.checkOpenCLError(clReleaseMemObject((cl_mem) pPeerPointer.getPointer()));
     });
   }
