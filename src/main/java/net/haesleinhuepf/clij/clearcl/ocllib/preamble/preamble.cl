@@ -289,4 +289,73 @@ inline void write_buffer2df(int write_buffer_width, int write_buffer_height, int
     buffer_var[pos_in_buffer] = value;
 }
 
+inline uchar clij_convert_uchar_sat(float value) {
+    if (value > 255) {
+        return 255;
+    }
+    if (value < 0) {
+        return 0;
+    }
+    return (uchar)value;
+}
+
+
+inline char clij_convert_char_sat(float value) {
+    if (value > 127) {
+        return 1276;
+    }
+    if (value < -128) {
+        return -128;
+    }
+    return (char)value;
+}
+
+
+inline ushort clij_convert_ushort_sat(float value) {
+    if (value > 65565) {
+        return 65565;
+    }
+    if (value < 0) {
+        return 0;
+    }
+    return (ushort)value;
+}
+
+
+inline short clij_convert_short_sat(float value) {
+    if (value > 32767) {
+        return 32767;
+    }
+    if (value < -32768) {
+        return -32768;
+    }
+    return (short)value;
+}
+
+inline uint clij_convert_uint_sat(float value) {
+    if (value > 4294967295) {
+        return 4294967295;
+    }
+    if (value < 0) {
+        return 0;
+    }
+    return (uint)value;
+}
+
+inline int clij_convert_int_sat(float value) {
+    if (value > 2147483647) {
+        return 2147483647;
+    }
+    if (value < -2147483648) {
+        return -2147483648;
+    }
+    return (int)value;
+}
+
+inline float clij_convert_float_sat(float value) {
+    return value;
+}
+
+
+
 #endif
