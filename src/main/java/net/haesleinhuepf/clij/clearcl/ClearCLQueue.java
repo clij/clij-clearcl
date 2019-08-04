@@ -1,5 +1,7 @@
 package net.haesleinhuepf.clij.clearcl;
 
+import java.lang.ref.WeakReference;
+
 import net.haesleinhuepf.clij.clearcl.abs.ClearCLBase;
 import net.haesleinhuepf.clij.clearcl.backend.ClearCLBackendInterface;
 import net.haesleinhuepf.clij.coremem.rgc.Cleanable;
@@ -14,12 +16,7 @@ import net.haesleinhuepf.clij.coremem.rgc.RessourceCleaner;
 public class ClearCLQueue extends ClearCLBase implements Cleanable
 {
 
-  private ClearCLContext mClearCLContext;
-
-  // This will register this buffer for GC cleanup
-  {
-    RessourceCleaner.register(this);
-  }
+  private WeakReference<ClearCLContext> mClearCLContextReference;
 
   /**
    * This constructor is called internally from an OpenCl context.
@@ -33,7 +30,11 @@ public class ClearCLQueue extends ClearCLBase implements Cleanable
                       ClearCLPeerPointer pQueuePointer)
   {
     super(pClearCLContext.getBackend(), pQueuePointer);
-    mClearCLContext = pClearCLContext;
+    mClearCLContextReference = new WeakReference<>(pClearCLContext);
+
+    // This will register this queue for GC cleanup
+    if (ClearCL.sRGC)
+      RessourceCleaner.register(this);
   }
 
   /**
@@ -43,7 +44,7 @@ public class ClearCLQueue extends ClearCLBase implements Cleanable
    */
   public ClearCLContext getContext()
   {
-    return mClearCLContext;
+    return mClearCLContextReference.get();
   }
 
   /**
@@ -72,7 +73,7 @@ public class ClearCLQueue extends ClearCLBase implements Cleanable
   private static class QueueCleaner implements Cleaner
   {
     public ClearCLBackendInterface mBackend;
-    public ClearCLPeerPointer mClearCLPeerPointer;
+    public volatile ClearCLPeerPointer mClearCLPeerPointer;
 
     public QueueCleaner(ClearCLBackendInterface pBackend,
                         ClearCLPeerPointer pClearCLPeerPointer)
@@ -87,21 +88,29 @@ public class ClearCLQueue extends ClearCLBase implements Cleanable
       try
       {
         if (mClearCLPeerPointer != null)
+        {
+          if (ClearCL.sDebugRGC)
+            System.out.println("Releasing queue:   "
+                               + mClearCLPeerPointer.toString());
+
           mBackend.releaseQueue(mClearCLPeerPointer);
+          mClearCLPeerPointer = null;
+        }
       }
-      catch (Exception e)
+      catch (Throwable e)
       {
-        e.printStackTrace();
+        if (ClearCL.sDebugRGC)
+          e.printStackTrace();
       }
     }
   }
 
-  QueueCleaner mQueueCleaner = new QueueCleaner(getBackend(),
-                                                getPeerPointer());
+  QueueCleaner mQueueCleaner;
 
   @Override
   public Cleaner getCleaner()
   {
+    mQueueCleaner = new QueueCleaner(getBackend(), getPeerPointer());
     return mQueueCleaner;
   }
 }

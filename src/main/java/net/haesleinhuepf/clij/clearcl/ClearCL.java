@@ -11,6 +11,7 @@ import net.haesleinhuepf.clij.clearcl.selector.DeviceSelector;
 import net.haesleinhuepf.clij.clearcl.selector.DeviceTypeSelector;
 import net.haesleinhuepf.clij.clearcl.selector.FastestDeviceSelector;
 import net.haesleinhuepf.clij.clearcl.selector.GlobalMemorySelector;
+import net.haesleinhuepf.clij.coremem.rgc.RessourceCleaner;
 
 /**
  * ClearCL is the starting point for creating ClearCL objects for OpenCL.
@@ -20,6 +21,18 @@ import net.haesleinhuepf.clij.clearcl.selector.GlobalMemorySelector;
  */
 public class ClearCL extends ClearCLBase
 {
+
+  static
+  {
+    // Forces the resource garbage collector to start
+    RessourceCleaner.cleanNow();
+  }
+
+  // This switch should never be touched, true -> RGC on, false--> RGC off
+  public static boolean sRGC = true;
+
+  // Turns on RGC debugging.
+  public static boolean sDebugRGC = false;
 
   HashSet<ClearCLDevice> mAccessedDeviceList = new HashSet<>();
 

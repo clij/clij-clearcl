@@ -8,7 +8,7 @@ package net.haesleinhuepf.clij.clearcl;
  */
 public class ClearCLPeerPointer
 {
-  private final Object mPointer;
+  protected final Object mPointer;
 
   /**
    * Creates a peer pointer from a backend internal pointer-wrapping object.

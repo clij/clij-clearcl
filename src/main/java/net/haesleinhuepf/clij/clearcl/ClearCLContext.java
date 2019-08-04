@@ -1,5 +1,6 @@
 package net.haesleinhuepf.clij.clearcl;
 
+import java.io.Closeable;
 import java.io.IOException;
 
 import net.haesleinhuepf.clij.clearcl.abs.ClearCLBase;
@@ -11,6 +12,7 @@ import net.haesleinhuepf.clij.clearcl.enums.ImageType;
 import net.haesleinhuepf.clij.clearcl.enums.KernelAccessType;
 import net.haesleinhuepf.clij.clearcl.enums.MemAllocMode;
 import net.haesleinhuepf.clij.clearcl.exceptions.OpenCLException;
+import net.haesleinhuepf.clij.clearcl.recycling.ClearCLRecyclablePeerPointer;
 import net.haesleinhuepf.clij.coremem.enums.NativeTypeEnum;
 import net.haesleinhuepf.clij.coremem.rgc.Cleanable;
 import net.haesleinhuepf.clij.coremem.rgc.Cleaner;
@@ -21,7 +23,7 @@ import net.haesleinhuepf.clij.coremem.rgc.RessourceCleaner;
  *
  * @author royer
  */
-public class ClearCLContext extends ClearCLBase implements Cleanable
+public class ClearCLContext implements Cleanable, Closeable
 {
   private boolean mDebugNotifyAllocation = false;
 
@@ -29,10 +31,7 @@ public class ClearCLContext extends ClearCLBase implements Cleanable
 
   private final ClearCLQueue mDefaultQueue;
 
-  // This will register this buffer for GC cleanup
-  {
-    RessourceCleaner.register(this);
-  }
+  private ClearCLRecyclablePeerPointer mContextPointer;
 
   /**
    * Construction of this object is done from within a ClearClDevice.
@@ -43,12 +42,47 @@ public class ClearCLContext extends ClearCLBase implements Cleanable
    *          context peer pointer
    */
   ClearCLContext(final ClearCLDevice pClearCLDevice,
-                 ClearCLPeerPointer pContextPointer)
+                 ClearCLRecyclablePeerPointer pContextPointer)
   {
-    super(pClearCLDevice.getBackend(), pContextPointer);
+    super();
     mDevice = pClearCLDevice;
-
+    mContextPointer = pContextPointer;
     mDefaultQueue = createQueue();
+
+    // This will register this context for GC cleanup
+    if (ClearCL.sRGC)
+      RessourceCleaner.register(this);
+  }
+
+  /**
+   * Returns the backend
+   *
+   * @return backend
+   */
+  public ClearCLBackendInterface getBackend()
+  {
+    return mDevice.getBackend();
+  }
+
+  /**
+   * Sets the peer pointer
+   *
+   * @param pPeerPointer
+   *          peer pointer
+   */
+  public void setPeerPointer(ClearCLRecyclablePeerPointer pPeerPointer)
+  {
+    mContextPointer = pPeerPointer;
+  }
+
+  /**
+   * Sets the peer pointer
+   *
+   * @return peer pointer
+   */
+  public ClearCLRecyclablePeerPointer getPeerPointer()
+  {
+    return mContextPointer;
   }
 
   /**
@@ -484,8 +518,7 @@ public class ClearCLContext extends ClearCLBase implements Cleanable
   {
     final ClearCLProgram lClearCLProgram =
                                          new ClearCLProgram(getDevice(),
-                                                            this,
-                                                            null);
+                                                            this);
     for (final String lSourceCode : pSourceCode)
       lClearCLProgram.addSource(lSourceCode);
 
@@ -560,8 +593,8 @@ public class ClearCLContext extends ClearCLBase implements Cleanable
     if (getPeerPointer() != null)
     {
       if (mContextCleaner != null)
-        mContextCleaner.mClearCLPeerPointer = null;
-      getBackend().releaseContext(getPeerPointer());
+        mContextCleaner.mClearCLContextPeerPointer = null;
+      getPeerPointer().release();
       setPeerPointer(null);
     }
   }
@@ -570,14 +603,14 @@ public class ClearCLContext extends ClearCLBase implements Cleanable
   // implicitely hold a reference of this image...
   private static class ContextCleaner implements Cleaner
   {
-    public ClearCLBackendInterface mBackend;
-    public ClearCLPeerPointer mClearCLPeerPointer;
+    private ClearCLBackendInterface mBackend;
+    private volatile ClearCLRecyclablePeerPointer mClearCLContextPeerPointer;
 
     public ContextCleaner(ClearCLBackendInterface pBackend,
-                          ClearCLPeerPointer pClearCLPeerPointer)
+                          ClearCLRecyclablePeerPointer pClearCLContextPeerPointer)
     {
       mBackend = pBackend;
-      mClearCLPeerPointer = pClearCLPeerPointer;
+      mClearCLContextPeerPointer = pClearCLContextPeerPointer;
     }
 
     @Override
@@ -585,23 +618,34 @@ public class ClearCLContext extends ClearCLBase implements Cleanable
     {
       try
       {
-        if (mClearCLPeerPointer != null)
-          mBackend.releaseContext(mClearCLPeerPointer);
+        if (mClearCLContextPeerPointer != null)
+        {
+          if (ClearCL.sDebugRGC)
+          {
+            System.out.println("Releasing context: "
+                               + mClearCLContextPeerPointer.toString());
+            System.out.println("          pointer: "
+                               + mClearCLContextPeerPointer.getPointer());
+          }
+          mClearCLContextPeerPointer.release();
+          mClearCLContextPeerPointer = null;
+        }
       }
-      catch (Exception e)
+      catch (Throwable e)
       {
-        e.printStackTrace();
+        if (ClearCL.sDebugRGC)
+          e.printStackTrace();
       }
     }
   }
 
-  ContextCleaner mContextCleaner =
-                                 new ContextCleaner(getBackend(),
-                                                    getPeerPointer());
+  ContextCleaner mContextCleaner;
 
   @Override
   public Cleaner getCleaner()
   {
+    mContextCleaner = new ContextCleaner(getBackend(),
+                                         getPeerPointer());
     return mContextCleaner;
   }
 

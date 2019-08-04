@@ -3,6 +3,12 @@ package net.haesleinhuepf.clij.clearcl;
 import net.haesleinhuepf.clij.clearcl.abs.ClearCLBase;
 import net.haesleinhuepf.clij.clearcl.enums.DeviceInfo;
 import net.haesleinhuepf.clij.clearcl.enums.DeviceType;
+import net.haesleinhuepf.clij.clearcl.exceptions.ClearCLTooManyContextsException;
+import net.haesleinhuepf.clij.clearcl.recycling.ClearCLRecyclablePeerPointer;
+import net.haesleinhuepf.clij.clearcl.recycling.ClearCLRecyclableRequest;
+import net.haesleinhuepf.clij.coremem.recycling.BasicRecycler;
+import net.haesleinhuepf.clij.coremem.recycling.RecyclableFactoryInterface;
+import net.haesleinhuepf.clij.coremem.recycling.RecyclerInterface;
 
 /**
  * ClearCLDevice is the ClearCL abstraction for OpenCl devices.
@@ -11,9 +17,11 @@ import net.haesleinhuepf.clij.clearcl.enums.DeviceType;
  */
 public class ClearCLDevice extends ClearCLBase
 {
+  private static final int cMaxContexts = 64;
 
-  private ClearCLPlatform mClearCLPlatform;
-  private ClearCLPeerPointer mDevicePointer;
+  private final ClearCLPlatform mClearCLPlatform;
+  private final ClearCLPeerPointer mDevicePointer;
+  private final RecyclerInterface<ClearCLRecyclablePeerPointer, ClearCLRecyclableRequest> mContextRecycler;
 
   /**
    * Construction of this object is done from within a ClearCLPlatform.
@@ -27,6 +35,31 @@ public class ClearCLDevice extends ClearCLBase
     super(pClearCLPlatform.getBackend(), pDevicePointer);
     mClearCLPlatform = pClearCLPlatform;
     mDevicePointer = pDevicePointer;
+
+    // Factory that creates new recyclable peer pointers for contexts:
+    final RecyclableFactoryInterface<ClearCLRecyclablePeerPointer, ClearCLRecyclableRequest> lRecyclableContextPeerPointerFactory =
+                                                                                                                                  new RecyclableFactoryInterface<ClearCLRecyclablePeerPointer, ClearCLRecyclableRequest>()
+                                                                                                                                  {
+                                                                                                                                    @Override
+                                                                                                                                    public ClearCLRecyclablePeerPointer create(ClearCLRecyclableRequest pParameters)
+                                                                                                                                    {
+
+                                                                                                                                      ClearCLPeerPointer lContextPointer =
+                                                                                                                                                                         getBackend().getContextPeerPointer(mClearCLPlatform.getPeerPointer(),
+                                                                                                                                                                                                            mDevicePointer);
+                                                                                                                                      return new ClearCLRecyclablePeerPointer(lContextPointer,
+                                                                                                                                                                              ClearCLContext.class);
+
+                                                                                                                                    }
+                                                                                                                                  };
+
+    // Recycler that keeps tracks of recyclable peer pointers for contexts:
+    mContextRecycler =
+                     new BasicRecycler<ClearCLRecyclablePeerPointer, ClearCLRecyclableRequest>(lRecyclableContextPeerPointerFactory,
+                                                                                               cMaxContexts,
+                                                                                               cMaxContexts,
+                                                                                               false);
+
   }
 
   /**
@@ -56,18 +89,11 @@ public class ClearCLDevice extends ClearCLBase
    */
   public double getVersion()
   {
-    final String[] lStringVersion =
-                                  getBackend().getDeviceVersion(mDevicePointer)
-                                              .replace("OpenCL C", "")
-                                              .trim()
-                                              .split("\\s+");
-
-    if (lStringVersion.length == 0)
-    {
-      return 0.;
-    }
-
-    Double lDoubleVersion = Double.parseDouble(lStringVersion[0]);
+    String lStringVersion =
+                          getBackend().getDeviceVersion(mDevicePointer)
+                                      .replace("OpenCL C", "")
+                                      .trim();
+    Double lDoubleVersion = Double.parseDouble(lStringVersion);
     return lDoubleVersion;
   }
 
@@ -171,20 +197,56 @@ public class ClearCLDevice extends ClearCLBase
   }
 
   /**
-   * Creates device context.
-   * 
+   * Creates device context. Contexts are mannaged internally by a recycler
+   * (CoreMem recycler), and are automatically released back to the recycler
+   * just before garbage collection. So in theory, there is no need to manually
+   * release a context as long as its reference is forgotten.
+   * <p>
+   * Note: There is a maximal number of contexts that can be created. This is a
+   * large number that should accomodate any reasonable application. An
+   * exception is thrown by this method if we run out of contexts, which can
+   * only happen if they are all used (reference is still known and thus not
+   * garbage collected).
+   *
    * @return context
    */
   public ClearCLContext createContext()
   {
-    ClearCLPeerPointer lContextPointer =
-                                       getBackend().getContextPeerPointer(mClearCLPlatform.getPeerPointer(),
-                                                                          mDevicePointer);
+    // We try to get a recycler, if there is none available (leak) we get null:
+    final ClearCLRecyclablePeerPointer lContextRecyclablePointer =
+                                                                 mContextRecycler.getOrFail(new ClearCLRecyclableRequest(this,
+                                                                                                                         ClearCLContext.class));
+
+    if (lContextRecyclablePointer == null)
+      throw new ClearCLTooManyContextsException();
+
     ClearCLContext lClearCLContext =
                                    new ClearCLContext(this,
-                                                      lContextPointer);
+                                                      lContextRecyclablePointer);
 
     return lClearCLContext;
+  }
+
+  /**
+   * Returns the number of 'live' contexts, i.e. contexts that have been created
+   * but not yet released.
+   *
+   * @return number of live contexts
+   */
+  public int getNumberOfLiveContexts()
+  {
+    return mContextRecycler.getNumberOfLiveObjects();
+  }
+
+  /**
+   * Returns the number of 'available' contexts, i.e. contexts that have been
+   * created and the released, and that are now available for recycling
+   *
+   * @return number of available contexts
+   */
+  public int getNumberOfAvailableContexts()
+  {
+    return mContextRecycler.getNumberOfAvailableObjects();
   }
 
   /* (non-Javadoc)
@@ -204,10 +266,19 @@ public class ClearCLDevice extends ClearCLBase
   @Override
   public void close()
   {
-    if (getPeerPointer() != null)
+    try
     {
-      getBackend().releaseDevice(getPeerPointer());
-      setPeerPointer(null);
+      if (getPeerPointer() != null)
+      {
+        mContextRecycler.clearReleased();
+
+        getBackend().releaseDevice(getPeerPointer());
+        setPeerPointer(null);
+      }
+    }
+    catch (Throwable e)
+    {
+      e.printStackTrace();
     }
   }
 
