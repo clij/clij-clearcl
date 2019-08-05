@@ -52,9 +52,10 @@ public class ClearCLCompiledProgram extends ClearCLBase
     mSourceCode = pSourceCode;
 
     // This will register this compiled program for GC cleanup
-    if (ClearCL.sRGC)
-      RessourceCleaner.register(this);
+    //if (ClearCL.sRGC)
+    //  RessourceCleaner.register(this);
   }
+
 
   /**
    * Returns the device for this program.
@@ -172,8 +173,8 @@ public class ClearCLCompiledProgram extends ClearCLBase
       getBackend().releaseProgram(getPeerPointer());
       setPeerPointer(null);
     }
-
   }
+
 
   // NOTE: this _must_ be a static class, otherwise instances of this class will
   // implicitely hold a reference of this image...

@@ -93,8 +93,8 @@ public class ClearCLKernel extends ClearCLBase
     mDefaultArgumentsMap = getKernelDefaultArgumentsMap(pKernelName);
 
     // This will register this kernel for GC cleanup
-    if (ClearCL.sRGC)
-      RessourceCleaner.register(this);
+    //if (ClearCL.sRGC)
+    //  RessourceCleaner.register(this);
   }
 
   /**
@@ -699,6 +699,7 @@ public class ClearCLKernel extends ClearCLBase
       setPeerPointer(null);
     }
   }
+
 
   // NOTE: this _must_ be a static class, otherwise instances of this class will
   // implicitely hold a reference of this image...

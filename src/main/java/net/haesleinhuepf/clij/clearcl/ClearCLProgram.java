@@ -37,7 +37,7 @@ public class ClearCLProgram implements AutoCloseable
   private volatile boolean mModified = true;
   private volatile String mLastBuiltSourceCode;
 
-  private ClearCLCompiledProgram mCompiledProgram;
+  private ClearCLCompiledProgram mCompiledProgram = null;
 
   /**
    * This constructor is called internally from an OpenCl context.
@@ -405,6 +405,10 @@ public class ClearCLProgram implements AutoCloseable
 
     String lOptions = concatenateOptions();
     mContext.getBackend().buildProgram(lProgramPeerPointer, lOptions);
+
+    if (mCompiledProgram != null) {
+      mCompiledProgram.close();
+    }
 
     mCompiledProgram =
                      new ClearCLCompiledProgram(mDevice,
@@ -858,6 +862,10 @@ public class ClearCLProgram implements AutoCloseable
   @Override
   public void close() throws IOException
   {
+    if (mCompiledProgram != null) {
+      mCompiledProgram.close();
+    }
+    mCompiledProgram = null;
     // nothing to do
   }
 }

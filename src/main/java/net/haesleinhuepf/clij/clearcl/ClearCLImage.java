@@ -86,8 +86,8 @@ public class ClearCLImage extends ClearCLMemBase implements
     mDimensions = pDimensions;
 
     // This will register this image for GC cleanup
-    if (ClearCL.sRGC)
-      RessourceCleaner.register(this);
+    //if (ClearCL.sRGC)
+    //  RessourceCleaner.register(this);
   }
 
   /**
