@@ -2,7 +2,6 @@ package net.haesleinhuepf.clij.clearcl.backend;
 
 import java.util.ArrayList;
 
-import net.haesleinhuepf.clij.clearcl.backend.javacl.ClearCLBackendJavaCL;
 import net.haesleinhuepf.clij.clearcl.backend.jocl.ClearCLBackendJOCL;
 import net.haesleinhuepf.clij.clearcl.benchmark.Benchmark;
 import net.haesleinhuepf.clij.clearcl.enums.BenchmarkTest;
@@ -36,14 +35,6 @@ public class ClearCLBackends
     catch (Throwable e)
     {
       System.err.println("Failed to instanciate JOCL backend during backend enumeration (not critical)");
-    }
-    try
-    {
-      lList.add(new ClearCLBackendJavaCL());
-    }
-    catch (Throwable e)
-    {
-      System.err.println("Failed to instanciate JavaCL backend during backend enumeration (not critical)");
     }
 
     return lList;
