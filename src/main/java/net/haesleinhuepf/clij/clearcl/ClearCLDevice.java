@@ -92,7 +92,7 @@ public class ClearCLDevice extends ClearCLBase
     String lStringVersion =
                           getBackend().getDeviceVersion(mDevicePointer)
                                       .replace("OpenCL C", "")
-                                      .trim();
+                                      .trim().split(" ")[0].split("\t")[0];
     Double lDoubleVersion = Double.parseDouble(lStringVersion);
     return lDoubleVersion;
   }
