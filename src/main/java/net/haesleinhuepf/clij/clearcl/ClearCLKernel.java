@@ -611,9 +611,19 @@ public class ClearCLKernel extends ClearCLBase
     {
       final String[] lSplit = lArgumentEntry.split("[*\\s]+");
       // System.out.println(Arrays.toString(lSplit));
+      final String lArgumentType = lSplit[lSplit.length - 2];
       final String lArgumentName = lSplit[lSplit.length - 1];
-      lNameToIndexMap.put(lArgumentName, i);
+      if (lArgumentType.startsWith("IMAGE_") && lArgumentType.endsWith("_TYPE")) {
+        String imageName = lArgumentType.substring(6, lArgumentType.length() - 5);
+        lNameToIndexMap.put("image_size_" + imageName + "_width", i);
+        i++;
+        lNameToIndexMap.put("image_size_" + imageName + "_height", i);
+        i++;
+        lNameToIndexMap.put("image_size_" + imageName + "_depth", i);
+        i++;
+      }
 
+      lNameToIndexMap.put(lArgumentName, i);
       i++;
     }
 
