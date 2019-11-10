@@ -217,10 +217,19 @@ public class ClearCLHostImageBuffer extends ClearCLMemBase implements
     mContiguousMemory.copyFrom(pBuffer);
   }
 
+
+  protected String name = "";
+  public void setName(String name) {
+    this.name = name;
+  }
+  public String getName() {
+    return name;
+  }
+
   @Override
   public String toString()
   {
-    return String.format("ClearCLHostImageBuffer [mContiguousMemory=%s, mNativeType=%s, mDimensions=%s, mNumberOfChannels=%s, getMemAllocMode()=%s, getKernelAccessType()=%s, getBackend()=%s, getPeerPointer()=%s]",
+    return String.format(name + " ClearCLHostImageBuffer [mContiguousMemory=%s, mNativeType=%s, mDimensions=%s, mNumberOfChannels=%s, getMemAllocMode()=%s, getKernelAccessType()=%s, getBackend()=%s, getPeerPointer()=%s]",
                          mContiguousMemory,
                          mNativeType,
                          Arrays.toString(mDimensions),
