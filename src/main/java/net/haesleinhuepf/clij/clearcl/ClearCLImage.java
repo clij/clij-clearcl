@@ -1051,10 +1051,18 @@ public class ClearCLImage extends ClearCLMemBase implements
            * getChannelOrder().getNumberOfChannels();
   }
 
+  protected String name = "";
+  public void setName(String name) {
+    this.name = name;
+  }
+  public String getName() {
+    return name;
+  }
+
   @Override
   public String toString()
   {
-    return String.format("ClearCLImage [mClearCLContext=%s, mImageType=%s, mImageChannelOrder=%s, mImageChannelDataType=%s, mDimensions=%s, getMemAllocMode()=%s, getHostAccessType()=%s, getKernelAccessType()=%s, getBackend()=%s, getPeerPointer()=%s]",
+    return String.format(name + " ClearCLImage [mClearCLContext=%s, mImageType=%s, mImageChannelOrder=%s, mImageChannelDataType=%s, mDimensions=%s, getMemAllocMode()=%s, getHostAccessType()=%s, getKernelAccessType()=%s, getBackend()=%s, getPeerPointer()=%s]",
                          mClearCLContext,
                          mImageType,
                          mImageChannelOrder,

@@ -170,4 +170,7 @@ public interface ClearCLImageInterface extends ClearCLMemInterface
     return getWidth() * getHeight() * getDepth();
   }
 
+  public String getName();
+  public void setName(String name);
+
 }

@@ -731,10 +731,20 @@ public class ClearCLBuffer extends ClearCLMemBase implements
            * mNativeType.getSizeInBytes();
   }
 
+  protected String name = "";
+
+  public void setName(String name) {
+    this.name = name;
+  }
+
+  public String getName() {
+    return name;
+  }
+
   @Override
   public String toString()
   {
-    return String.format("ClearCLBuffer [mClearCLContext=%s, mNativeType=%s, mNumberOfChannels=%s, mDimensions=%s, getMemAllocMode()=%s, getHostAccessType()=%s, getKernelAccessType()=%s, getBackend()=%s, getPeerPointer()=%s]",
+    return String.format(name + " ClearCLBuffer [mClearCLContext=%s, mNativeType=%s, mNumberOfChannels=%s, mDimensions=%s, getMemAllocMode()=%s, getHostAccessType()=%s, getKernelAccessType()=%s, getBackend()=%s, getPeerPointer()=%s]",
                          mClearCLContext,
                          mNativeType,
                          mNumberOfChannels,
