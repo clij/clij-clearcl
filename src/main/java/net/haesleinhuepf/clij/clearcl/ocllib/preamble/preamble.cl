@@ -302,7 +302,7 @@ inline uchar clij_convert_uchar_sat(float value) {
 
 inline char clij_convert_char_sat(float value) {
     if (value > 127) {
-        return 1276;
+        return 127;
     }
     if (value < -128) {
         return -128;
@@ -312,8 +312,8 @@ inline char clij_convert_char_sat(float value) {
 
 
 inline ushort clij_convert_ushort_sat(float value) {
-    if (value > 65565) {
-        return 65565;
+    if (value > 65535) {
+        return 65535;
     }
     if (value < 0) {
         return 0;
