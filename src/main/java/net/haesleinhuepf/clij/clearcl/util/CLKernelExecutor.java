@@ -29,7 +29,7 @@ public class CLKernelExecutor {
     Map<String, Object> parameterMap;
     Map<String, Object> constantsMap;
     long[] globalSizes;
-
+    long[] localSizes;
 
     boolean imageSizeIndependentCompilation = false;
 
@@ -43,7 +43,9 @@ public class CLKernelExecutor {
 
     public static void getOpenCLDefines(Map<String, Object> defines, String key, ImageChannelDataType imageChannelDataType, int dimension) {
 
-        String sizeParameters = "long image_size_" + key + "_width, long image_size_" + key + "_height, long image_size_" + key + "_depth, ";
+        String sizeParameters = "const long image_size_" + key + "_width, " +
+                                "const long image_size_" + key + "_height, " +
+                                "const long image_size_" + key + "_depth, ";
 
         if (key.contains("dst") || key.contains("destination") || key.contains("output")) {
             if (dimension == 3) {
@@ -105,7 +107,11 @@ public class CLKernelExecutor {
 
         String sat = "_sat"; //typeName.compareTo("float")==0?"":"_sat";
 
-        defines.put("IMAGE_" + key + "_PIXEL_TYPE", typeName);
+        //if (key.contains("dst") || key.contains("destination") || key.contains("output")) {
+            defines.put("IMAGE_" + key + "_PIXEL_TYPE", typeName);
+        //} else {
+        //    defines.put("IMAGE_" + key + "_PIXEL_TYPE", "const " + typeName);
+        //}
         defines.put("CONVERT_" + key + "_PIXEL_TYPE", "clij_convert_" + typeName + sat);
         defines.put("IMAGE_" + key + "_TYPE", sizeParameters + "__global " + typeName + "*");
 
@@ -258,6 +264,11 @@ public class CLKernelExecutor {
             } else if (dstBuffer != null) {
                 clearCLKernel.setGlobalSizes(dstBuffer.getDimensions());
             }*/
+
+            if (localSizes != null) {
+                kernel.setLocalSizes(localSizes);
+            }
+
             final ClearCLKernel workaround = kernel;
             ElapsedTime.measure("Setting arguments", () -> {
                 if (parameterMap != null) {
@@ -367,6 +378,10 @@ public class CLKernelExecutor {
 
     public void setGlobalSizes(long[] globalSizes) {
         this.globalSizes = globalSizes;
+    }
+
+    public void setLocalSizes(long[] localSizes) {
+        this.localSizes = localSizes;
     }
 
     protected ClearCLKernel getKernel(ClearCLContext context, String kernelName) throws IOException {
