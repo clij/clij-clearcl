@@ -356,6 +356,7 @@ inline float clij_convert_float_sat(float value) {
     return value;
 }
 
-
+#define READ_IMAGE(a,b,c) READ_ ## a ## _IMAGE(a,b,c)
+#define WRITE_IMAGE(a,b,c) WRITE_ ## a ## _IMAGE(a,b,c)
 
 #endif
