@@ -390,10 +390,13 @@ public class CLKernelExecutor {
 
     protected ClearCLKernel getKernel(ClearCLContext context, String kernelName, Map<String, Object> defines) throws IOException {
 
-        String programCacheKey = anchorClass.getCanonicalName() + " " + programFilename;
+        StringBuilder builder = new StringBuilder();
+
+        builder.append(anchorClass.getCanonicalName() + " " + programFilename);
         for (String key : defines.keySet()) {
-            programCacheKey = programCacheKey + " " + (key + " = " + defines.get(key));
+            builder.append(" " + (key + " = " + defines.get(key)));
         }
+        String programCacheKey = builder.toString();
 
         ClearCLProgram clProgram = this.programCacheMap.get(programCacheKey);
         currentProgram = clProgram;
