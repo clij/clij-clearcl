@@ -190,24 +190,24 @@ public class CLKernelExecutor {
             // deal with image width/height/depth for all images and buffers
             ArrayList<String> definedParameterKeys = new ArrayList<String>();
             for (String key : parameterMap.keySet()) {
-                if (parameterMap.get(key) instanceof ClearCLImage) {
-                    ClearCLImage image = (ClearCLImage) parameterMap.get(key);
+                Object object = parameterMap.get(key);
+
+                if (object instanceof  ClearCLImageInterface) {
                     if (!imageSizeIndependentCompilation) {
+                        ClearCLImageInterface image = (ClearCLImageInterface) object;
                         openCLDefines.put("IMAGE_SIZE_" + key + "_WIDTH", image.getWidth());
                         openCLDefines.put("IMAGE_SIZE_" + key + "_HEIGHT", image.getHeight());
                         openCLDefines.put("IMAGE_SIZE_" + key + "_DEPTH", image.getDepth());
                     }
-                    getOpenCLDefines(openCLDefines, key, image.getChannelDataType(), (int) image.getDimension());
-                    getPositionDefineOpenCLDefines(openCLDefines, key, (int) image.getDimension());
-                } else if (parameterMap.get(key) instanceof ClearCLBuffer) {
-                    ClearCLBuffer image = (ClearCLBuffer) parameterMap.get(key);
-                    if (!imageSizeIndependentCompilation) {
-                        openCLDefines.put("IMAGE_SIZE_" + key + "_WIDTH", image.getWidth());
-                        openCLDefines.put("IMAGE_SIZE_" + key + "_HEIGHT", image.getHeight());
-                        openCLDefines.put("IMAGE_SIZE_" + key + "_DEPTH", image.getDepth());
+                    if (object instanceof ClearCLImage) {
+                        ClearCLImage image = (ClearCLImage) object;
+                        getOpenCLDefines(openCLDefines, key, image.getChannelDataType(), (int) image.getDimension());
+                        getPositionDefineOpenCLDefines(openCLDefines, key, (int) image.getDimension());
+                    } else if (object instanceof ClearCLBuffer) {
+                        ClearCLBuffer image = (ClearCLBuffer) object;
+                        getOpenCLDefines(openCLDefines, key, image.getNativeType(), (int) image.getDimension());
+                        getPositionDefineOpenCLDefines(openCLDefines, key, (int) image.getDimension());
                     }
-                    getOpenCLDefines(openCLDefines, key, image.getNativeType(), (int) image.getDimension());
-                    getPositionDefineOpenCLDefines(openCLDefines, key, (int) image.getDimension());
                 }
                 definedParameterKeys.add(key);
             }
