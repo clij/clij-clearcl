@@ -212,24 +212,6 @@ public class CLKernelExecutor {
                 definedParameterKeys.add(key);
             }
 
-            // add undefined parameters to define list
-//            ArrayList<String> variableNames = getImageVariablesFromSource();
-//            for (String variableName : variableNames) {
-//
-//                boolean existsAlready = false;
-//                for (String key : definedParameterKeys) {
-//                    if (key.compareTo(variableName) == 0) {
-//                        existsAlready = true;
-//                        break;
-//                    }
-//                }
-//                if (!existsAlready) {
-//                    //openCLDefines.put("IMAGE_SIZE_" + variableName + "_WIDTH", 0);
-//                    //openCLDefines.put("IMAGE_SIZE_" + variableName + "_HEIGHT", 0);
-//                    //openCLDefines.put("IMAGE_SIZE_" + variableName + "_DEPTH", 0);
-//                }
-//            }
-
             if (imageSizeIndependentCompilation) {
                 openCLDefines.put("GET_IMAGE_WIDTH(image_key)", "image_size_ ## image_key ## _width");
                 openCLDefines.put("GET_IMAGE_HEIGHT(image_key)", "image_size_ ## image_key ## _height");
@@ -257,13 +239,8 @@ public class CLKernelExecutor {
         }
         if (kernel != null) {
             if (globalSizes != null) {
-                //System.out.println("Global sizes " + Arrays.toString(globalSizes));
-                kernel.setGlobalSizes(globalSizes); //globalSizes);
-            }/* else if (dstImage != null) {
-                clearCLKernel.setGlobalSizes(dstImage.getDimensions());
-            } else if (dstBuffer != null) {
-                clearCLKernel.setGlobalSizes(dstBuffer.getDimensions());
-            }*/
+                kernel.setGlobalSizes(globalSizes);
+            }
 
             if (localSizes != null) {
                 kernel.setLocalSizes(localSizes);
@@ -274,12 +251,8 @@ public class CLKernelExecutor {
                 if (parameterMap != null) {
                     for (String key : parameterMap.keySet()) {
                         Object obj = parameterMap.get(key);
-                        //System.out.println(key + " = " + parameterMap.get(key));
                         workaround.setArgument(key, obj);
                         if (obj instanceof ClearCLImageInterface) {
-                            //System.out.println(key + "_w = " + ((ClearCLImageInterface) obj).getWidth());
-                            //System.out.println(key + "_h = " + ((ClearCLImageInterface) obj).getHeight());
-                            //System.out.println(key + "_d = " + ((ClearCLImageInterface) obj).getDepth());
                             workaround.setArgument("image_size_" + key + "_width", ((ClearCLImageInterface) obj).getWidth());
                             workaround.setArgument("image_size_" + key + "_height", ((ClearCLImageInterface) obj).getHeight());
                             workaround.setArgument("image_size_" + key + "_depth", ((ClearCLImageInterface) obj).getDepth());
@@ -301,67 +274,6 @@ public class CLKernelExecutor {
         }
 
         return kernel;
-    }
-
-    private HashMap<String, ArrayList<String>> variableListMap = new HashMap<String, ArrayList<String>>();
-    private ArrayList<String> getImageVariablesFromSource() {
-        String key = anchorClass.getName() + "_" + programFilename;
-
-        if (variableListMap.containsKey(key)) {
-            return variableListMap.get(key);
-        }
-        ArrayList<String> variableList = new ArrayList<String>();
-
-        String sourceCode = getProgramSource();
-        String[] kernels = sourceCode.split("__kernel");
-
-        kernels[0] = "";
-        for (String kernel : kernels) {
-            if (kernel.length() > 0 ) {
-                //System.out.println("Parsing " + kernel.split("\\(")[0]);
-                String temp1 = kernel.split("\\(")[1];
-                if (temp1.length() > 0) {
-                    String parameterText = temp1.split("\\)")[0];
-                    parameterText = parameterText.replace("\n", " ");
-                    parameterText = parameterText.replace("\t", " ");
-                    parameterText = parameterText.replace("\r", " ");
-
-                    //System.out.println("Parsing parameters " + parameterText);
-
-                    String[] parameters = parameterText.split(",");
-                    for (String parameter : parameters) {
-                        if (parameter.contains("IMAGE")) {
-                            String[] temp2 = parameter.trim().split(" ");
-                            String variableName = temp2[temp2.length - 1];
-
-                            variableList.add(variableName);
-
-                        }
-                    }
-                }
-            }
-        }
-
-        variableListMap.put(key, variableList);
-        return variableList;
-    }
-
-    private final HashMap<String, String> sourceCodeCache = new HashMap<String, String>();
-    protected String getProgramSource() {
-        String key = anchorClass.getName() + "_" + programFilename;
-
-        if (sourceCodeCache.containsKey(key)) {
-            return sourceCodeCache.get(key);
-        }
-        try {
-            ClearCLProgram program = context.createProgram(this.anchorClass, new String[]{this.programFilename});
-            String source = program.getSourceCode();
-            sourceCodeCache.put(key, source);
-            return source;
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return "";
     }
 
     public void setAnchorClass(Class anchorClass) {
