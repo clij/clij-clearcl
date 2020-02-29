@@ -48,13 +48,17 @@ public class CLKernelExecutor {
                                 "const long image_size_" + key + "_depth, ";
 
         if (key.contains("dst") || key.contains("destination") || key.contains("output")) {
-            if (dimension == 3) {
+            if (dimension > 3) {
+                throw  new IllegalArgumentException("clImages with > 3 dimesnions not supported! User buffers instead.");
+            } else if (dimension == 3) {
                 defines.put("IMAGE_" + key + "_TYPE", sizeParameters + "__write_only image3d_t");
             } else if (dimension == 2) {
                 defines.put("IMAGE_" + key + "_TYPE", sizeParameters + "__write_only image2d_t");
             }
         } else {
-            if (dimension == 3) {
+            if (dimension > 3) {
+                throw  new IllegalArgumentException("clImages with > 3 dimesnions not supported! Use buffers instead.");
+            } else if (dimension == 3) {
                 defines.put("IMAGE_" + key + "_TYPE", sizeParameters + "__read_only image3d_t");
             } else if (dimension == 2) {
                 defines.put("IMAGE_" + key + "_TYPE", sizeParameters + "__read_only image2d_t");
@@ -121,6 +125,9 @@ public class CLKernelExecutor {
         } else if (dimension == 3) {
             defines.put("READ_" + key + "_IMAGE(a,b,c)", "read_buffer3d" + typeId + "(GET_IMAGE_WIDTH(a),GET_IMAGE_HEIGHT(a),GET_IMAGE_DEPTH(a),a,b,c)");
             defines.put("WRITE_" + key + "_IMAGE(a,b,c)", "write_buffer3d" + typeId + "(GET_IMAGE_WIDTH(a),GET_IMAGE_HEIGHT(a),GET_IMAGE_DEPTH(a),a,b,c)");
+        } else if (dimension == 4) {
+            defines.put("READ_" + key + "_IMAGE(a,b,c)", "read_buffer4d" + typeId + "(GET_IMAGE_WIDTH(a),GET_IMAGE_HEIGHT(a),GET_IMAGE_DEPTH(a),a,b,c)");
+            defines.put("WRITE_" + key + "_IMAGE(a,b,c)", "write_buffer4d" + typeId + "(GET_IMAGE_WIDTH(a),GET_IMAGE_HEIGHT(a),GET_IMAGE_DEPTH(a),a,b,c)");
         }
     }
 
@@ -244,6 +251,12 @@ public class CLKernelExecutor {
 
             if (localSizes != null) {
                 kernel.setLocalSizes(localSizes);
+            } else if (globalSizes.length > 3) { // multidim images
+                long[] temp = new long[globalSizes.length];
+                for (int i = 0; i < temp.length; i++) {
+                    temp[i] = 4;
+                }
+                kernel.setLocalSizes(temp);
             }
 
             final ClearCLKernel workaround = kernel;
