@@ -337,6 +337,26 @@ public interface ClearCLBackendInterface
                          int pIndex,
                          Object pObject);
 
+
+  /**
+   * Returns the number of arguments of the given kernel.
+   *
+   * @param pKernelPeerPointer
+   *          kernel peer pointer
+   */
+  int getNumberOfKernelArguments(ClearCLPeerPointer pKernelPeerPointer);
+
+  /**
+   * Returns the name of a kernel argument.
+   *
+   * @param pKernelPeerPointer
+   *          kernel peer pointer
+   * @param pIndex
+   *          argument index
+   */
+  String getKernelArgumentName(ClearCLPeerPointer pKernelPeerPointer,
+                               int pIndex);
+
   /**
    * Enqueues execution of a kernel on a given queue for a set of kernel run
    * parameters

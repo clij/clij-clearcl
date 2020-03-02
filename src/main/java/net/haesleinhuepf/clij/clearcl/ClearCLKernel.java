@@ -3,8 +3,6 @@ package net.haesleinhuepf.clij.clearcl;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import net.haesleinhuepf.clij.clearcl.abs.ClearCLBase;
 import net.haesleinhuepf.clij.clearcl.backend.ClearCLBackendInterface;
@@ -17,7 +15,6 @@ import net.haesleinhuepf.clij.clearcl.util.ElapsedTime;
 import net.haesleinhuepf.clij.coremem.enums.NativeTypeEnum;
 import net.haesleinhuepf.clij.coremem.rgc.Cleanable;
 import net.haesleinhuepf.clij.coremem.rgc.Cleaner;
-import net.haesleinhuepf.clij.coremem.rgc.RessourceCleaner;
 
 /**
  * ClearCLKernel is the ClearCL abstraction for OpenCL kernels.
@@ -89,7 +86,7 @@ public class ClearCLKernel extends ClearCLBase
     mName = pKernelName;
     mSourceCode = pSourceCode;
 
-    mNameToIndexMap = getKernelIndexMap(pKernelName);
+    mNameToIndexMap = getKernelIndexMap();
     mDefaultArgumentsMap = getKernelDefaultArgumentsMap(pKernelName);
 
     // This will register this kernel for GC cleanup
@@ -599,79 +596,19 @@ public class ClearCLKernel extends ClearCLBase
     return lNameToDefaultArgumentMapMap;
   }
 
-  private ConcurrentHashMap<String, Integer> getKernelIndexMap(final String pKernelName)
+  private ConcurrentHashMap<String, Integer> getKernelIndexMap()
   {
     final ConcurrentHashMap<String, Integer> lNameToIndexMap =
                                                              new ConcurrentHashMap<String, Integer>();
 
-    final String[] lKernelSignature = getKernelSignature(pKernelName);
-
-    int i = 0;
-    for (final String lArgumentEntry : lKernelSignature)
-    {
-      final String[] lSplit = lArgumentEntry.split("[*\\s]+");
-      // System.out.println(Arrays.toString(lSplit));
-      final String lArgumentType = lSplit[lSplit.length - 2];
-      final String lArgumentName = lSplit[lSplit.length - 1];
-      if (lArgumentType.startsWith("IMAGE_") && lArgumentType.endsWith("_TYPE")) {
-        String imageName = lArgumentType.substring(6, lArgumentType.length() - 5);
-        lNameToIndexMap.put("image_size_" + imageName + "_width", i);
-        i++;
-        lNameToIndexMap.put("image_size_" + imageName + "_height", i);
-        i++;
-        lNameToIndexMap.put("image_size_" + imageName + "_depth", i);
-        i++;
-      }
-
-      lNameToIndexMap.put(lArgumentName, i);
-      i++;
+    ClearCLPeerPointer peerPointer = getPeerPointer();
+    ClearCLBackendInterface backend = getBackend();
+    int n = backend.getNumberOfKernelArguments(peerPointer);
+    for (int i = 0; i < n; i++) {
+      lNameToIndexMap.put(backend.getKernelArgumentName(peerPointer, i), i);
     }
 
     return lNameToIndexMap;
-  }
-
-  private String[] getKernelSignature(final String pKernelName)
-  {
-    final String lSourceCode = getSourceCode();
-    {
-      Pattern lPattern = Pattern.compile("[\n\r\\s]+(" + pKernelName
-                                         + ")[\n\r\\s(]+");
-
-      Matcher lMatcher = lPattern.matcher(lSourceCode);
-
-      /*final int lBeginOfKernelSignature =
-                                        max(lSourceCode.indexOf(pKernelName+" "),
-                                            lSourceCode.indexOf(pKernelName+"("));/**/
-      // if (lBeginOfKernelSignature >= 0)
-      if (lMatcher.find())
-      {
-        int lBeginOfKernelSignature = lMatcher.start(1);
-        final int lEndOfKernelSignature =
-                                        lSourceCode.indexOf('{',
-                                                            lBeginOfKernelSignature);
-        final String lSubStringKernel =
-                                      lSourceCode.substring(lBeginOfKernelSignature,
-                                                            lEndOfKernelSignature);
-
-        final String lSubStringSignature =
-                                         lSubStringKernel.substring(lSubStringKernel.indexOf('(')
-                                                                    + 1,
-                                                                    lSubStringKernel.indexOf(')'));
-
-        // System.out.println("[[[" + lSubStringSignature + "]]]");
-
-        final String[] lKernelSignature =
-                                        lSubStringSignature.split(",",
-                                                                  -1);
-
-        for (int i = 0; i < lKernelSignature.length; i++)
-          lKernelSignature[i] = lKernelSignature[i].trim();
-
-        // System.out.println(Arrays.toString(lKernelSignature));
-        return lKernelSignature;
-      }
-    }
-    return null;
   }
 
   /**
