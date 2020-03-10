@@ -318,7 +318,7 @@ inline char2 read_buffer2dc(int read_buffer_width, int read_buffer_height, int r
     }
     int pos_in_buffer = pos.x + pos.y * read_buffer_width;
     if (pos.x < 0 || pos.x >= read_buffer_width || pos.y < 0 || pos.y >= read_buffer_height) {
-        return (char){0, 0};
+        return (char2){0, 0};
     }
     return (char2){buffer_var[pos_in_buffer],0};
 }
@@ -334,7 +334,7 @@ inline uchar2 read_buffer2duc(int read_buffer_width, int read_buffer_height, int
     }
     int pos_in_buffer = pos.x + pos.y * read_buffer_width;
     if (pos.x < 0 || pos.x >= read_buffer_width || pos.y < 0 || pos.y >= read_buffer_height) {
-        return (uchar){0, 0};
+        return (uchar2){0, 0};
     }
     return (uchar2){buffer_var[pos_in_buffer],0};
 }
