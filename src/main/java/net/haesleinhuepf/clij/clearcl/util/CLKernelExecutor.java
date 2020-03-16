@@ -24,6 +24,7 @@ public class CLKernelExecutor {
     public static int MAX_ARRAY_SIZE = 1000;
     ClearCLContext context;
     Class anchorClass;
+    String programSourceCode;
     String programFilename;
     String kernelName;
     Map<String, Object> parameterMap;
@@ -281,7 +282,13 @@ public class CLKernelExecutor {
     }
 
     public void setProgramFilename(String programFilename) {
+        this.programSourceCode = null;
         this.programFilename = programFilename;
+    }
+
+    public void setProgramSourceCode(String programSourceCode) {
+        this.programSourceCode = programSourceCode;
+        this.programFilename = null;
     }
 
     public void setKernelName(String kernelName) {
@@ -304,7 +311,11 @@ public class CLKernelExecutor {
 
         StringBuilder builder = new StringBuilder();
 
-        builder.append(anchorClass.getCanonicalName() + " " + programFilename);
+        if (programFilename != null) {
+            builder.append(anchorClass.getCanonicalName() + " " + programFilename);
+        } else {
+            builder.append(anchorClass.getCanonicalName() + " " + programSourceCode.hashCode());
+        }
         for (String key : defines.keySet()) {
             builder.append(" " + (key + " = " + defines.get(key)));
         }
@@ -313,7 +324,11 @@ public class CLKernelExecutor {
         ClearCLProgram clProgram = this.programCacheMap.get(programCacheKey);
         currentProgram = clProgram;
         if (clProgram == null) {
-            clProgram = context.createProgram(this.anchorClass, new String[]{this.programFilename});
+            if (programFilename != null) {
+                clProgram = context.createProgram(this.anchorClass, new String[]{this.programFilename});
+            } else {
+                clProgram = context.createProgram(programSourceCode);
+            }
             if (defines != null) {
                 Iterator iterator = defines.entrySet().iterator();
 
