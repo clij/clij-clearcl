@@ -1,6 +1,7 @@
 package net.haesleinhuepf.clij.clearcl.backend.jocl;
 
 import static org.jocl.CL.CL_CONTEXT_PLATFORM;
+import static org.jocl.CL.CL_KERNEL_ARG_NAME;
 import static org.jocl.CL.clBuildProgram;
 import static org.jocl.CL.clCreateBuffer;
 import static org.jocl.CL.clCreateCommandQueue;
@@ -721,6 +722,34 @@ public class ClearCLBackendJOCL extends ClearCLBackendBase
       }
     });
 
+  }
+
+  @Override
+  public int getNumberOfKernelArguments(ClearCLPeerPointer pKernelPeerPointer) {
+    int[] lValue = new int[1];
+  	BackendUtils.checkExceptions(() -> {
+      BackendUtils.checkOpenCLError(CL.clGetKernelInfo((cl_kernel) pKernelPeerPointer.getPointer(),
+              CL.CL_KERNEL_NUM_ARGS,
+              4,
+              Pointer.to(lValue),
+              new long[1]));
+    });
+    return lValue[0];
+  }
+
+  @Override
+  public String getKernelArgumentName(ClearCLPeerPointer pKernelPeerPointer, int pIndex) {
+    byte[] lBytes = new byte[200];
+    long[] lNumberOfBytesUsed = new long[1];
+    BackendUtils.checkExceptions(() -> {
+      BackendUtils.checkOpenCLError(CL.clGetKernelArgInfo((cl_kernel) pKernelPeerPointer.getPointer(),
+                                                          pIndex,
+                                                          CL_KERNEL_ARG_NAME,
+                                                          lBytes.length,
+                                                          Pointer.to(lBytes),
+                                                          lNumberOfBytesUsed));
+    });
+    return new String(lBytes, 0, (int) lNumberOfBytesUsed[0] - 1);
   }
 
   @Override

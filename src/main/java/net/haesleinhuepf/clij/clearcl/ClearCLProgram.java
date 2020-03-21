@@ -2,6 +2,7 @@ package net.haesleinhuepf.clij.clearcl;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -30,7 +31,7 @@ public class ClearCLProgram implements AutoCloseable
   private final ConcurrentHashMap<String, String> mDefinesMap =
                                                               new ConcurrentHashMap<>();
   private final ArrayList<String> mBuildOptionsList =
-                                                    new ArrayList<>();
+                                                    new ArrayList<>(Collections.singletonList("-cl-kernel-arg-info"));
   private final ArrayList<String> mIncludesSearchPackages =
                                                           new ArrayList<>();
 
