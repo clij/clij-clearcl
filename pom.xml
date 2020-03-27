@@ -8,13 +8,13 @@
 	<parent>
 		<groupId>net.haesleinhuepf</groupId>
 		<artifactId>clij-parent-pom</artifactId>
-		<version>1.5.0</version>
+		<version>1.5.5</version>
 		<relativePath />
 	</parent>
 
 	<groupId>net.clearcontrol</groupId>
 	<artifactId>clij-clearcl</artifactId>
-	<version>0.10.7</version>
+	<version>0.10.9</version>
 
 	<name>clij-clearcl</name>
 	<description>clij-clearcl</description>
