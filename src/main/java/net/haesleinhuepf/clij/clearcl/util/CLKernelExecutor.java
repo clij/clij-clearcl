@@ -183,9 +183,7 @@ public class CLKernelExecutor {
             openCLDefines.put("MAX_ARRAY_SIZE", MAX_ARRAY_SIZE); // needed for median. Median is limited to a given array length to be sorted
 
             if (constantsMap != null) {
-                for (String key : constantsMap.keySet()) {
-                    openCLDefines.put(key, constantsMap.get(key));
-                }
+                openCLDefines.putAll(constantsMap);
             }
 
             // deal with image width/height/depth for all images and buffers
