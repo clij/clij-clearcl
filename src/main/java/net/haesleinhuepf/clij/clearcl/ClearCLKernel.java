@@ -299,6 +299,11 @@ public class ClearCLKernel extends ClearCLBase
     setArgument(lArgumentIndex, pObject);
   }
 
+  public boolean hasArgument(final String pArgumentName) {
+    return mNameToIndexMap.containsKey(pArgumentName);
+  }
+
+
   /**
    * Return argument value for a given argument name.
    * 
