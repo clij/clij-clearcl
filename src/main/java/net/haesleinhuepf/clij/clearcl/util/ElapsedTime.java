@@ -110,8 +110,12 @@ public class ElapsedTime
                         lElapsedTimeInMilliseconds,
                         pDescription);
 
-    if (lThrowable != null)
-      throw new RuntimeException(lThrowable);
+    if (lThrowable != null) {
+      if (lThrowable instanceof RuntimeException)
+        throw (RuntimeException) lThrowable;
+      else
+        throw new RuntimeException(lThrowable);
+    }
 
     return lElapsedTimeInMilliseconds;
   }
