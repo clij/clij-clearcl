@@ -252,9 +252,12 @@ public class CLKernelExecutor {
                         Object obj = parameterMap.get(key);
                         workaround.setArgument(key, obj);
                         if (obj instanceof ClearCLImageInterface) {
-                            workaround.setArgument("image_size_" + key + "_width", ((ClearCLImageInterface) obj).getWidth());
-                            workaround.setArgument("image_size_" + key + "_height", ((ClearCLImageInterface) obj).getHeight());
-                            workaround.setArgument("image_size_" + key + "_depth", ((ClearCLImageInterface) obj).getDepth());
+                            if(workaround.hasArgument("image_size_" + key + "_width"))
+                                workaround.setArgument("image_size_" + key + "_width", ((ClearCLImageInterface) obj).getWidth());
+                            if(workaround.hasArgument("image_size_" + key + "_height"))
+                                workaround.setArgument("image_size_" + key + "_height", ((ClearCLImageInterface) obj).getHeight());
+                            if(workaround.hasArgument("image_size_" + key + "_depth"))
+                                workaround.setArgument("image_size_" + key + "_depth", ((ClearCLImageInterface) obj).getDepth());
                         }
                     }
                 }
