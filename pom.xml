@@ -62,7 +62,9 @@
 	</developers>
 	<contributors>
 		<contributor>
-			<name>none</name>
+			<properties><id>maarzt</id></properties>
+			<name>Matthias Arzt</name>
+			<url>https://imagej.net/User:Maarzt</url>
 		</contributor>
 	</contributors>
 
