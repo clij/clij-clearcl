@@ -25,7 +25,6 @@ import net.haesleinhuepf.clij.coremem.interop.NIOBuffersInterop;
 import net.haesleinhuepf.clij.coremem.offheap.OffHeapMemory;
 import net.haesleinhuepf.clij.coremem.rgc.Cleanable;
 import net.haesleinhuepf.clij.coremem.rgc.Cleaner;
-import net.haesleinhuepf.clij.coremem.rgc.RessourceCleaner;
 
 /**
  * ClearCLImage is the ClearCL abstraction for OpenCL images.
@@ -1088,6 +1087,7 @@ public class ClearCLImage extends ClearCLMemBase implements
       getBackend().releaseImage(getPeerPointer());
       setPeerPointer(null);
     }
+    mClearCLContext.removeImageWithoutClosing(this);
   }
 
   // NOTE: this _must_ be a static class, otherwise instances of this class will

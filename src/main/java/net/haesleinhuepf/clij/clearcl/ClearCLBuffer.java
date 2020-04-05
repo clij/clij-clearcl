@@ -17,7 +17,6 @@ import net.haesleinhuepf.clij.coremem.ContiguousMemoryInterface;
 import net.haesleinhuepf.clij.coremem.enums.NativeTypeEnum;
 import net.haesleinhuepf.clij.coremem.rgc.Cleanable;
 import net.haesleinhuepf.clij.coremem.rgc.Cleaner;
-import net.haesleinhuepf.clij.coremem.rgc.RessourceCleaner;
 import net.haesleinhuepf.clij.coremem.util.Size;
 
 /**
@@ -769,7 +768,10 @@ public class ClearCLBuffer extends ClearCLMemBase implements
       getBackend().releaseBuffer(getPeerPointer());
       setPeerPointer(null);
     }
+    mClearCLContext.removeImageWithoutClosing(this);
   }
+
+
 
   // NOTE: this _must_ be a static class, otherwise instances of this class will
   // implicitely hold a reference of this image...
