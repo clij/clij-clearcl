@@ -4,7 +4,6 @@ import java.nio.Buffer;
 import java.util.Arrays;
 
 import net.haesleinhuepf.clij.clearcl.abs.ClearCLMemBase;
-import net.haesleinhuepf.clij.clearcl.backend.ClearCLBackendInterface;
 import net.haesleinhuepf.clij.clearcl.enums.HostAccessType;
 import net.haesleinhuepf.clij.clearcl.enums.KernelAccessType;
 import net.haesleinhuepf.clij.clearcl.enums.MemAllocMode;
@@ -15,8 +14,6 @@ import net.haesleinhuepf.clij.clearcl.interfaces.ClearCLMemInterface;
 import net.haesleinhuepf.clij.clearcl.util.Region3;
 import net.haesleinhuepf.clij.coremem.ContiguousMemoryInterface;
 import net.haesleinhuepf.clij.coremem.enums.NativeTypeEnum;
-import net.haesleinhuepf.clij.coremem.rgc.Cleanable;
-import net.haesleinhuepf.clij.coremem.rgc.Cleaner;
 import net.haesleinhuepf.clij.coremem.util.Size;
 
 /**
@@ -26,8 +23,7 @@ import net.haesleinhuepf.clij.coremem.util.Size;
  */
 public class ClearCLBuffer extends ClearCLMemBase implements
                            ClearCLMemInterface,
-                           ClearCLImageInterface,
-                           Cleanable
+                           ClearCLImageInterface
 
 {
 
@@ -44,6 +40,7 @@ public class ClearCLBuffer extends ClearCLMemBase implements
    * @param pBufferPointer
    *          buffer pointer
    * @param pMemAllocMode
+   *          memory allocation mode
    * @param pHostAccessType
    *          host access type
    * @param pKernelAccessType
@@ -71,10 +68,6 @@ public class ClearCLBuffer extends ClearCLMemBase implements
     mNumberOfChannels = pNumberOfChannels;
     mNativeType = pNativeType;
     mDimensions = pDimensions;
-
-    // This will register this buffer for GC cleanup
-    //if (ClearCL.sRGC)
-    //  RessourceCleaner.register(this);
   }
 
   /**
@@ -764,60 +757,8 @@ public class ClearCLBuffer extends ClearCLMemBase implements
     mClearCLContext.removeImage(this);
     if (getPeerPointer() != null)
     {
-      if (mBufferCleaner != null)
-        mBufferCleaner.mClearCLPeerPointer = null;
       getBackend().releaseBuffer(getPeerPointer());
       setPeerPointer(null);
     }
   }
-
-
-
-  // NOTE: this _must_ be a static class, otherwise instances of this class will
-  // implicitely hold a reference of this image...
-  private static class BufferCleaner implements Cleaner
-  {
-    public ClearCLBackendInterface mBackend;
-    public volatile ClearCLPeerPointer mClearCLPeerPointer;
-
-    public BufferCleaner(ClearCLBackendInterface pBackend,
-                         ClearCLPeerPointer pClearCLPeerPointer)
-    {
-      mBackend = pBackend;
-      mClearCLPeerPointer = pClearCLPeerPointer;
-    }
-
-    @Override
-    public void run()
-    {
-      try
-      {
-        if (mClearCLPeerPointer != null)
-        {
-          if (ClearCL.sDebugRGC)
-            System.out.println("Releasing buffer: "
-                               + mClearCLPeerPointer.toString());
-          mBackend.releaseBuffer(mClearCLPeerPointer);
-          mClearCLPeerPointer = null;
-        }
-      }
-      catch (Throwable e)
-      {
-        if (ClearCL.sDebugRGC)
-          e.printStackTrace();
-      }
-    }
-  }
-
-  BufferCleaner mBufferCleaner;
-
-  @Override
-  public Cleaner getCleaner()
-  {
-    mBufferCleaner =
-                   new BufferCleaner(getBackend(), getPeerPointer());
-
-    return mBufferCleaner;
-  }
-
 }
