@@ -8,7 +8,6 @@ import net.haesleinhuepf.clij.clearcl.backend.ClearCLBackendInterface;
 import net.haesleinhuepf.clij.clearcl.enums.HostAccessType;
 import net.haesleinhuepf.clij.clearcl.enums.KernelAccessType;
 import net.haesleinhuepf.clij.clearcl.enums.MemAllocMode;
-import net.haesleinhuepf.clij.clearcl.interfaces.ClearCLImageInterface;
 import net.haesleinhuepf.clij.clearcl.interfaces.ClearCLMemChangeListener;
 import net.haesleinhuepf.clij.clearcl.interfaces.ClearCLMemInterface;
 
@@ -18,11 +17,8 @@ import net.haesleinhuepf.clij.clearcl.interfaces.ClearCLMemInterface;
  * @author royer
  */
 public abstract class ClearCLMemBase extends ClearCLBase
-                                     implements ClearCLMemInterface, Comparable
+                                     implements ClearCLMemInterface
 {
-  private int memobject_index;
-  private static int memobject_count = 0;
-  private static Object countLock = new Object();
 
   private final MemAllocMode mMemAllocMode;
   private final HostAccessType mHostAccessType;
@@ -55,10 +51,6 @@ public abstract class ClearCLMemBase extends ClearCLBase
     mMemAllocMode = pMemAllocMode;
     mHostAccessType = pHostAccessType;
     mKernelAccessType = pKernelAccessType;
-    synchronized (countLock) {
-      memobject_index = memobject_count;
-      memobject_count++;
-    }
   }
 
   /**
@@ -136,16 +128,4 @@ public abstract class ClearCLMemBase extends ClearCLBase
                          getPeerPointer());
   }
 
-  /**
-   * Memory objects are comparable (to order them) by allocation order.
-   * @param o object to copare to; must implement ClearCLMemBase
-   * @return relative index
-   */
-  @Override
-  public int compareTo(Object o) {
-    if (o instanceof ClearCLMemBase) {
-      return memobject_index - ((ClearCLMemBase) o).memobject_index;
-    }
-    return 1;
-  }
 }
