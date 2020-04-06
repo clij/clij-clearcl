@@ -2,7 +2,9 @@ package net.haesleinhuepf.clij.clearcl;
 
 import net.haesleinhuepf.clij.clearcl.interfaces.ClearCLImageInterface;
 
-import java.util.concurrent.ConcurrentSkipListSet;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
 /**
  * This class keeps track of all ClearCLImages and ClearCLBuffers which are created by a
@@ -11,63 +13,32 @@ import java.util.concurrent.ConcurrentSkipListSet;
  * Author: @haesleinhuepf
  *         April 2020
  */
-class ClearCLImageInterfaceMemoryManager extends ConcurrentSkipListSet<ClearCLImageInterface> {
+class ClearCLImageInterfaceMemoryManager  {
 
-    @Override
-    public boolean remove(Object o) {
-        if (o instanceof ClearCLImageInterface) {
-            ((ClearCLImageInterface) o).close();
-        }
-        removeReleasedImages();
-        return super.remove(o);
+    private Set<ClearCLImageInterface> images = ConcurrentHashMap.newKeySet();
+
+	public void add(ClearCLImageInterface image) {
+	    images.add(image);
     }
 
-    /**
-     * Internal method for removing objects from the list without releasing memory behind.
-     * This is called from ClearCLImage and ClearCLBuffers when their close() method was called.
-     * @param o
-     */
-    void removeWithoutClosing(Object o) {
-        super.remove(o);
+    public void remove(ClearCLImageInterface image) {
+	    images.remove(image);
     }
 
-    @Override
-    public void clear() {
-        for (ClearCLImageInterface image : this) {
-            image.close();
-        }
-        super.clear();
-    }
-
-    @Override
-    public boolean add(ClearCLImageInterface clearCLImageInterface) {
-        removeReleasedImages();
-        return super.add(clearCLImageInterface);
-    }
-
-    /**
-     * This method is called to release objects from the list which were called earlier.
-     * TODO: We might remove it.
-     */
-    private void removeReleasedImages() {
-        for (ClearCLImageInterface buffer : this) {
-            if (buffer.getPeerPointer() == null) {
-                remove(buffer);
-            }
-        }
+    public void closeAll() {
+	    images.forEach(ClearCLImageInterface::close);
     }
 
     /**
      * Build up a human-readable list of all ClearCLImages and ClearCLBuffer which are
      * managed here.
-     * @return list of objects and their allocated memory
      */
-    public String toString() {
+    public String reportMemory(String deviceName) {
         StringBuilder stringBuilder = new StringBuilder();
         long bytesSum = 0;
-        stringBuilder.append("GPU contains " + size() + " images.\n");
+        stringBuilder.append(deviceName + " contains " + images.size() + " images.\n");
         boolean wasClosedAlready = false;
-        for (ClearCLImageInterface buffer : this) {
+        for (ClearCLImageInterface buffer : images) {
             String star = "";
             if (buffer.getPeerPointer() == null) {
                 star = "*";
@@ -86,21 +57,20 @@ class ClearCLImageInterfaceMemoryManager extends ConcurrentSkipListSet<ClearCLIm
     }
 
 
-    private String humanReadableBytes(double bytesSum) {
-        if (bytesSum > 1024) {
-            bytesSum = bytesSum / 1024;
-            if (bytesSum > 1024) {
-                bytesSum = bytesSum / 1024;
-                if (bytesSum > 1024) {
-                    bytesSum = bytesSum / 1024;
-                    return (Math.round(bytesSum * 10.0) / 10.0 + " Gb");
-                } else {
-                    return (Math.round(bytesSum * 10.0) / 10.0 + " Mb");
-                }
-            } else {
-                return (Math.round(bytesSum * 10.0) / 10.0 + " kb");
-            }
-        }
-        return Math.round(bytesSum * 10.0) / 10.0 + " b";
+    private String humanReadableBytes(long numberOfBytes) {
+    	if (numberOfBytes < 1024)
+            return numberOfBytes + " bytes";
+        double value = numberOfBytes / 1024;
+        if (value < 1024)
+            return format(value) + " kB";
+        value = value / 1024;
+        if (value < 1024)
+            return format(value) + " MB";
+        value = value / 1024;
+        return format(value) + " GB";
+    }
+
+    private String format(double bytesSum) {
+        return Double.toString(Math.round(bytesSum * 10.0) / 10.0);
     }
 }

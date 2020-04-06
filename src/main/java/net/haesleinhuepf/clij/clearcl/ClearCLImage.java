@@ -1087,7 +1087,7 @@ public class ClearCLImage extends ClearCLMemBase implements
       getBackend().releaseImage(getPeerPointer());
       setPeerPointer(null);
     }
-    mClearCLContext.removeImageWithoutClosing(this);
+    mClearCLContext.removeImage(this);
   }
 
   // NOTE: this _must_ be a static class, otherwise instances of this class will

@@ -761,6 +761,7 @@ public class ClearCLBuffer extends ClearCLMemBase implements
   @Override
   public void close()
   {
+    mClearCLContext.removeImage(this);
     if (getPeerPointer() != null)
     {
       if (mBufferCleaner != null)
@@ -768,7 +769,6 @@ public class ClearCLBuffer extends ClearCLMemBase implements
       getBackend().releaseBuffer(getPeerPointer());
       setPeerPointer(null);
     }
-    mClearCLContext.removeImageWithoutClosing(this);
   }
 
 
