@@ -13,8 +13,6 @@ import net.haesleinhuepf.clij.clearcl.exceptions.ClearCLUnknownArgumentNameExcep
 import net.haesleinhuepf.clij.clearcl.interfaces.ClearCLImageInterface;
 import net.haesleinhuepf.clij.clearcl.util.ElapsedTime;
 import net.haesleinhuepf.clij.coremem.enums.NativeTypeEnum;
-import net.haesleinhuepf.clij.coremem.rgc.Cleanable;
-import net.haesleinhuepf.clij.coremem.rgc.Cleaner;
 
 /**
  * ClearCLKernel is the ClearCL abstraction for OpenCL kernels.
@@ -22,7 +20,7 @@ import net.haesleinhuepf.clij.coremem.rgc.Cleaner;
  * @author royer
  */
 public class ClearCLKernel extends ClearCLBase
-                           implements Runnable, Cleanable
+                           implements Runnable
 {
 
   private class Argument
@@ -66,13 +64,14 @@ public class ClearCLKernel extends ClearCLBase
    * 
    * @param pClearCLContext
    *          context
-   * @param pClearCLProgram
+   * @param pClearCLCompiledProgram
    *          program
    * @param pKernelPointer
    *          kernel peer pointer
    * @param pKernelName
    *          kernel name
    * @param pSourceCode
+   *          source code
    */
   ClearCLKernel(final ClearCLContext pClearCLContext,
                 final ClearCLCompiledProgram pClearCLCompiledProgram,
@@ -88,10 +87,6 @@ public class ClearCLKernel extends ClearCLBase
 
     mNameToIndexMap = getKernelIndexMap();
     mDefaultArgumentsMap = getKernelDefaultArgumentsMap(pKernelName);
-
-    // This will register this kernel for GC cleanup
-    //if (ClearCL.sRGC)
-    //  RessourceCleaner.register(this);
   }
 
   /**
@@ -645,58 +640,8 @@ public class ClearCLKernel extends ClearCLBase
   {
     if (getPeerPointer() != null)
     {
-      if (mKernelCleaner != null)
-        mKernelCleaner.mClearCLPeerPointer = null;
       getBackend().releaseKernel(getPeerPointer());
       setPeerPointer(null);
     }
   }
-
-
-  // NOTE: this _must_ be a static class, otherwise instances of this class will
-  // implicitely hold a reference of this image...
-  private static class KernelCleaner implements Cleaner
-  {
-    public ClearCLBackendInterface mBackend;
-    public volatile ClearCLPeerPointer mClearCLPeerPointer;
-
-    public KernelCleaner(ClearCLBackendInterface pBackend,
-                         ClearCLPeerPointer pClearCLPeerPointer)
-    {
-      mBackend = pBackend;
-      mClearCLPeerPointer = pClearCLPeerPointer;
-    }
-
-    @Override
-    public void run()
-    {
-      try
-      {
-        if (mClearCLPeerPointer != null)
-        {
-          if (ClearCL.sDebugRGC)
-            System.out.println("Releasing kernel: "
-                               + mClearCLPeerPointer.toString());
-          mBackend.releaseKernel(mClearCLPeerPointer);
-          mClearCLPeerPointer = null;
-        }
-      }
-      catch (Throwable e)
-      {
-        if (ClearCL.sDebugRGC)
-          e.printStackTrace();
-      }
-    }
-  }
-
-  KernelCleaner mKernelCleaner;
-
-  @Override
-  public Cleaner getCleaner()
-  {
-    mKernelCleaner =
-                   new KernelCleaner(getBackend(), getPeerPointer());
-    return mKernelCleaner;
-  }
-
 }
