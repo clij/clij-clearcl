@@ -3,7 +3,6 @@ package net.haesleinhuepf.clij.clearcl;
 import java.io.Closeable;
 import java.io.IOException;
 
-import net.haesleinhuepf.clij.clearcl.abs.ClearCLBase;
 import net.haesleinhuepf.clij.clearcl.backend.ClearCLBackendInterface;
 import net.haesleinhuepf.clij.clearcl.enums.HostAccessType;
 import net.haesleinhuepf.clij.clearcl.enums.ImageChannelDataType;
@@ -12,6 +11,7 @@ import net.haesleinhuepf.clij.clearcl.enums.ImageType;
 import net.haesleinhuepf.clij.clearcl.enums.KernelAccessType;
 import net.haesleinhuepf.clij.clearcl.enums.MemAllocMode;
 import net.haesleinhuepf.clij.clearcl.exceptions.OpenCLException;
+import net.haesleinhuepf.clij.clearcl.interfaces.ClearCLImageInterface;
 import net.haesleinhuepf.clij.clearcl.recycling.ClearCLRecyclablePeerPointer;
 import net.haesleinhuepf.clij.coremem.enums.NativeTypeEnum;
 import net.haesleinhuepf.clij.coremem.rgc.Cleanable;
@@ -33,6 +33,8 @@ public class ClearCLContext implements Cleanable, Closeable
 
   private ClearCLRecyclablePeerPointer mContextPointer;
 
+  private ClearCLImageInterfaceMemoryManager mMemoryManager;
+
   /**
    * Construction of this object is done from within a ClearClDevice.
    * 
@@ -48,6 +50,8 @@ public class ClearCLContext implements Cleanable, Closeable
     mDevice = pClearCLDevice;
     mContextPointer = pContextPointer;
     mDefaultQueue = createQueue();
+
+    mMemoryManager = new ClearCLImageInterfaceMemoryManager();
 
     // This will register this context for GC cleanup
     if (ClearCL.sRGC)
@@ -164,10 +168,10 @@ public class ClearCLContext implements Cleanable, Closeable
                                     final long pBufferLengthInElements)
   {
     return createBuffer(MemAllocMode.Best,
-                        HostAccessType.ReadWrite,
-                        KernelAccessType.ReadWrite,
-                        pNativeType,
-                        pBufferLengthInElements);
+            HostAccessType.ReadWrite,
+            KernelAccessType.ReadWrite,
+            pNativeType,
+            pBufferLengthInElements);
   }
 
   /**
@@ -213,10 +217,10 @@ public class ClearCLContext implements Cleanable, Closeable
                                     final long pBufferLengthInElements)
   {
     return createBuffer(pMemAllocMode,
-                        HostAccessType.ReadWrite,
-                        KernelAccessType.ReadWrite,
-                        pNativeType,
-                        pBufferLengthInElements);
+            HostAccessType.ReadWrite,
+            KernelAccessType.ReadWrite,
+            pNativeType,
+            pBufferLengthInElements);
   }
 
   /**
@@ -242,11 +246,11 @@ public class ClearCLContext implements Cleanable, Closeable
                                     final long pBufferLengthInElements)
   {
     return createBuffer(pMemAllocMode,
-                        pHostAccessType,
-                        pKernelAccessType,
-                        1,
-                        pNativeType,
-                        pBufferLengthInElements);
+            pHostAccessType,
+            pKernelAccessType,
+            1,
+            pNativeType,
+            pBufferLengthInElements);
   }
 
   /**
@@ -304,6 +308,8 @@ public class ClearCLContext implements Cleanable, Closeable
                                                          pNumberOfChannels,
                                                          pNativeType,
                                                          pDimensions);
+
+    mMemoryManager.add(lClearCLBuffer);
     return lClearCLBuffer;
   }
 
@@ -332,13 +338,15 @@ public class ClearCLContext implements Cleanable, Closeable
   public ClearCLImage createImage(ClearCLImage pImage,
                                   ImageChannelDataType pChannelDataType)
   {
-    return createImage(pImage.getMemAllocMode(),
-                       pImage.getHostAccessType(),
-                       pImage.getKernelAccessType(),
-                       pImage.getChannelOrder(),
-                       pChannelDataType == null ? pImage.getChannelDataType()
-                                                : pChannelDataType,
-                       pImage.getDimensions());
+    ClearCLImage image = createImage(pImage.getMemAllocMode(),
+            pImage.getHostAccessType(),
+            pImage.getKernelAccessType(),
+            pImage.getChannelOrder(),
+            pChannelDataType == null ? pImage.getChannelDataType()
+                    : pChannelDataType,
+            pImage.getDimensions());
+
+    return image;
   }
 
   /**
@@ -357,14 +365,15 @@ public class ClearCLContext implements Cleanable, Closeable
   public ClearCLImage createSingleChannelImage(final ImageChannelDataType pImageChannelType,
                                                final long... pDimensions)
   {
-    return createImage(MemAllocMode.Best,
-                       HostAccessType.ReadWrite,
-                       KernelAccessType.ReadWrite,
-                       getDevice().getType()
-                                  .isCPU() ? ImageChannelOrder.Intensity
-                                           : ImageChannelOrder.R,
-                       pImageChannelType,
-                       pDimensions);
+    ClearCLImage image = createImage(MemAllocMode.Best,
+            HostAccessType.ReadWrite,
+            KernelAccessType.ReadWrite,
+            getDevice().getType()
+                    .isCPU() ? ImageChannelOrder.Intensity
+                    : ImageChannelOrder.R,
+            pImageChannelType,
+            pDimensions);
+    return image;
   }
 
   /**
@@ -384,12 +393,13 @@ public class ClearCLContext implements Cleanable, Closeable
                                   final ImageChannelDataType pImageChannelType,
                                   final long... pDimensions)
   {
-    return createImage(MemAllocMode.Best,
-                       HostAccessType.ReadWrite,
-                       KernelAccessType.ReadWrite,
-                       pImageChannelOrder,
-                       pImageChannelType,
-                       pDimensions);
+    ClearCLImage image = createImage(MemAllocMode.Best,
+            HostAccessType.ReadWrite,
+            KernelAccessType.ReadWrite,
+            pImageChannelOrder,
+            pImageChannelType,
+            pDimensions);
+    return image;
   }
 
   /**
@@ -411,14 +421,15 @@ public class ClearCLContext implements Cleanable, Closeable
                                                final ImageChannelDataType pImageChannelType,
                                                final long... pDimensions)
   {
-    return createImage(MemAllocMode.Best,
-                       pHostAccessType,
-                       pKernelAccessType,
-                       getDevice().getType()
-                                  .isCPU() ? ImageChannelOrder.Intensity
-                                           : ImageChannelOrder.R,
-                       pImageChannelType,
-                       pDimensions);
+    ClearCLImage image = createImage(MemAllocMode.Best,
+            pHostAccessType,
+            pKernelAccessType,
+            getDevice().getType()
+                    .isCPU() ? ImageChannelOrder.Intensity
+                    : ImageChannelOrder.R,
+            pImageChannelType,
+            pDimensions);
+    return image;
   }
 
   /**
@@ -444,12 +455,13 @@ public class ClearCLContext implements Cleanable, Closeable
                                   final ImageChannelDataType pImageChannelType,
                                   final long... pDimensions)
   {
-    return createImage(MemAllocMode.Best,
-                       pHostAccessType,
-                       pKernelAccessType,
-                       pImageChannelOrder,
-                       pImageChannelType,
-                       pDimensions);
+    ClearCLImage image = createImage(MemAllocMode.Best,
+            pHostAccessType,
+            pKernelAccessType,
+            pImageChannelOrder,
+            pImageChannelType,
+            pDimensions);
+    return image;
   }
 
   /**
@@ -504,6 +516,8 @@ public class ClearCLContext implements Cleanable, Closeable
                                                         pImageChannelType,
                                                         pDimensions);
 
+
+    mMemoryManager.add(lClearCLImage);
     return lClearCLImage;
   }
 
@@ -590,6 +604,7 @@ public class ClearCLContext implements Cleanable, Closeable
   @Override
   public void close()
   {
+    mMemoryManager.closeAll();
     if (getPeerPointer() != null)
     {
       if (mContextCleaner != null)
@@ -637,6 +652,22 @@ public class ClearCLContext implements Cleanable, Closeable
           e.printStackTrace();
       }
     }
+  }
+
+  /**
+   * Report about allocated images
+   * @return human readable text listing all allocated images and buffers.
+   */
+  public String reportAboutAllocatedImages() {
+    return mMemoryManager.reportMemory(getDevice().getName());
+  }
+
+  /**
+   * Internal method to release an entry from the list
+   * @param o An object implementing the ClearCLImageInterface
+   */
+  void removeImage(ClearCLImageInterface o) {
+    mMemoryManager.remove(o);
   }
 
   ContextCleaner mContextCleaner;

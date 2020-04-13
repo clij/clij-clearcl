@@ -4,6 +4,7 @@ import java.nio.Buffer;
 
 import net.haesleinhuepf.clij.clearcl.ClearCLBuffer;
 import net.haesleinhuepf.clij.clearcl.ClearCLImage;
+import net.haesleinhuepf.clij.clearcl.ClearCLPeerPointer;
 import net.haesleinhuepf.clij.clearcl.backend.ClearCLBackendInterface;
 import net.haesleinhuepf.clij.coremem.ContiguousMemoryInterface;
 import net.haesleinhuepf.clij.coremem.enums.NativeTypeEnum;
@@ -172,5 +173,10 @@ public interface ClearCLImageInterface extends ClearCLMemInterface
 
   public String getName();
   public void setName(String name);
+
+  public ClearCLPeerPointer getPeerPointer();
+
+
+  public void close();
 
 }
