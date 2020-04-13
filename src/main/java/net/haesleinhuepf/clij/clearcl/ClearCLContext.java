@@ -670,6 +670,13 @@ public class ClearCLContext implements Cleanable, Closeable
     mMemoryManager.remove(o);
   }
 
+  /**
+   * Empty memory by releasing all images and buffers.
+   */
+  public void releaseImages() {
+    mMemoryManager.closeAll();
+  }
+
   ContextCleaner mContextCleaner;
 
   @Override
