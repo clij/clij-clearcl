@@ -1,17 +1,16 @@
 package net.haesleinhuepf.clij.clearcl;
 
 import net.haesleinhuepf.clij.clearcl.backend.jocl.ClearCLBackendJOCL;
-import net.haesleinhuepf.clij.clearcl.enums.HostAccessType;
-import net.haesleinhuepf.clij.clearcl.enums.KernelAccessType;
-import net.haesleinhuepf.clij.clearcl.enums.MemAllocMode;
-import net.haesleinhuepf.clij.coremem.enums.NativeTypeEnum;
+import net.haesleinhuepf.clij.clearcl.enums.ImageChannelDataType;
+import net.haesleinhuepf.clij.clearcl.enums.ImageChannelOrder;
 import org.junit.Test;
 
+import java.nio.ByteBuffer;
 import java.nio.FloatBuffer;
 
 import static org.junit.Assert.assertArrayEquals;
 
-public class ClearCLBufferTest {
+public class ClearCLImageTest {
 
 	@Test
 	public void testReadFromAndWriteTo() {
@@ -21,11 +20,15 @@ public class ClearCLBufferTest {
 				ClearCL clearCL = new ClearCL(new ClearCLBackendJOCL());
 				ClearCLDevice device = clearCL.getBestGPUDevice();
 				ClearCLContext context = device.createContext();
-				ClearCLBuffer buffer = context.createBuffer(MemAllocMode.Best, HostAccessType.ReadWrite,
-						KernelAccessType.ReadWrite, 2, NativeTypeEnum.Float, 2, 2, 2);
+				ClearCLImage buffer = context.createImage(ImageChannelOrder.RG, ImageChannelDataType.Float,
+						2, 2, 2)
 		) {
-			buffer.readFrom(FloatBuffer.wrap(expected), true);
-			buffer.writeTo(FloatBuffer.wrap(result), true);
+			FloatBuffer in = ByteBuffer.allocateDirect(expected.length * Float.BYTES).asFloatBuffer();
+			in.put(expected);
+			buffer.readFrom(in, true);
+			FloatBuffer out = ByteBuffer.allocateDirect(result.length * Float.BYTES).asFloatBuffer();
+			buffer.writeTo(out, true);
+			out.get(result);
 		}
 		assertArrayEquals(expected, result, 0);
 	}
