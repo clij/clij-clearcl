@@ -81,9 +81,13 @@ public class ClearCLBackendJOCL extends ClearCLBackendBase
   {
     return BackendUtils.checkExceptions(() -> {
       final int numPlatformsArray[] = new int[1];
-      BackendUtils.checkOpenCLError(clGetPlatformIDs(0,
-                                                     null,
-                                                     numPlatformsArray));
+      synchronized (CL.class) {
+        // The call to CL.clGetPlatformIDs must be synchronized.
+        // At least on Ubuntu 16.04, NVIDIA GTX960M, Driver Version 410.129.
+        BackendUtils.checkOpenCLError(clGetPlatformIDs(0,
+                null,
+                numPlatformsArray));
+      }
       final int lNumberOfPlatforms = numPlatformsArray[0];
       return lNumberOfPlatforms;
     });
