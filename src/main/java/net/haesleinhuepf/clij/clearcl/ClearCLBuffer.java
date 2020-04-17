@@ -169,9 +169,9 @@ public class ClearCLBuffer extends ClearCLMemBase implements
                      boolean pBlockingCopy)
   {
     if ((pOffsetInSrcBuffer + pLengthInElements)
-        * getPixelSizeInBytes() > getSizeInBytes()
+        * getNativeType().getSizeInBytes() > getSizeInBytes()
         || (pOffsetInDstBuffer + pLengthInElements)
-           * getPixelSizeInBytes() > pDstBuffer.getSizeInBytes())
+           * getNativeType().getSizeInBytes() > pDstBuffer.getSizeInBytes())
       throw new ClearCLException("Incompatible length");
 
     getBackend().enqueueCopyBuffer(mClearCLContext.getDefaultQueue()
@@ -335,9 +335,9 @@ public class ClearCLBuffer extends ClearCLMemBase implements
       throw new ClearCLHostAccessException("Image not readable from host");
 
     if ((pOffsetInBuffer + pLengthInBuffer)
-        * getPixelSizeInBytes() > pContiguousMemory.getSizeInBytes()
+        * getNativeType().getSizeInBytes() > pContiguousMemory.getSizeInBytes()
         || (pOffsetInBuffer + pLengthInBuffer)
-           * getPixelSizeInBytes() > getSizeInBytes())
+           * getNativeType().getSizeInBytes() > getSizeInBytes())
       throw new ClearCLException("Incompatible length");
 
     ClearCLPeerPointer lHostMemPointer =
@@ -390,9 +390,9 @@ public class ClearCLBuffer extends ClearCLMemBase implements
       throw new ClearCLHostAccessException("Image not readable from host");
 
     if ((pOffsetInBuffer + pLengthInBuffer)
-        * getPixelSizeInBytes() > Size.ofBuffer(pBuffer)
+        * getNativeType().getSizeInBytes() > Size.ofBuffer(pBuffer)
         || (pOffsetInBuffer + pLengthInBuffer)
-           * getPixelSizeInBytes() > getSizeInBytes())
+           * getNativeType().getSizeInBytes() > getSizeInBytes())
       throw new ClearCLException("Incompatible length");
 
     ClearCLPeerPointer lHostMemPointer = getBackend().wrap(pBuffer);
@@ -445,9 +445,9 @@ public class ClearCLBuffer extends ClearCLMemBase implements
       throw new ClearCLHostAccessException("Image not writable from host");
 
     if ((pOffsetInBuffer + pLengthInBuffer)
-        * getPixelSizeInBytes() > pContiguousMemory.getSizeInBytes()
+        * getNativeType().getSizeInBytes() > pContiguousMemory.getSizeInBytes()
         || (pOffsetInBuffer + pLengthInBuffer)
-           * getPixelSizeInBytes() > getSizeInBytes())
+           * getNativeType().getSizeInBytes() > getSizeInBytes())
       throw new ClearCLException("Incompatible length");
 
     ClearCLPeerPointer lHostMemPointer =
@@ -501,9 +501,9 @@ public class ClearCLBuffer extends ClearCLMemBase implements
       throw new ClearCLHostAccessException("Image not writable from host");
 
     if ((pOffsetInBuffer + pLengthInBuffer)
-        * getPixelSizeInBytes() > Size.ofBuffer(pBuffer)
+        * getNativeType().getSizeInBytes() > Size.ofBuffer(pBuffer)
         || (pOffsetInBuffer + pLengthInBuffer)
-           * getPixelSizeInBytes() > getSizeInBytes())
+           * getNativeType().getSizeInBytes() > getSizeInBytes())
       throw new ClearCLException("Incompatible length");
 
     ClearCLPeerPointer lHostMemPointer = getBackend().wrap(pBuffer);
