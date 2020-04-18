@@ -263,16 +263,9 @@ public class CLKernelExecutor {
                 }
             });
 
-            double duration = ElapsedTime.measure("Pure kernel execution", () -> {
-                try {
-                    workaround.run(waitToFinish);
-                } catch (Exception e) {
-                    e.printStackTrace();
-
-                    System.out.println(workaround.getSourceCode());
-                }
+            ElapsedTime.measure("Pure kernel execution", () -> {
+               workaround.run(waitToFinish);
             });
-            //clearCLKernel.close();
         }
 
         return kernel;
