@@ -76,25 +76,27 @@
 	</mailingLists>
 
 	<scm>
-		<connection>scm:git:git://github.com/clij/clij</connection>
-        <developerConnection>scm:git:git@github.com/clij/clij</developerConnection>
+		<connection>scm:git:git://github.com/clij/clij-clearcl</connection>
+        <developerConnection>scm:git:git@github.com/clij/clij-clearcl</developerConnection>
         <tag>HEAD</tag>
-		<url>https://github.com/clij/clij</url>
+		<url>https://github.com/clij/clij-clearcl</url>
 	</scm>
 	<issueManagement>
 		<system>GitHub Issues</system>
 		<url>https://github.com/clij/clij/issues</url>
 	</issueManagement>
 	<ciManagement>
-		<system>None</system>
+		<system>Travis CI</system>
+		<url>https://travis-ci.com/clij/clij-clearcl</url>
 	</ciManagement>
 
 	<properties>
 		<package-name>net.haesleinhuepf</package-name>
 		<license.licenseName>lgpl_3</license.licenseName>
 		<license.copyrightOwners>Loic A. Royer, CZ Biohub, Robert Haase, MPI CBG</license.copyrightOwners>
-		<imagej.app.directory>C:/programs/fiji-win64/Fiji.app/</imagej.app.directory>
-		<!--<imagej.app.directory>/home/haase/programs/fiji/Fiji.app/</imagej.app.directory>-->
+		<releaseProfiles>deploy-to-scijava</releaseProfiles>
+    <scijava.app.directory>C:/programs/fiji-win64/Fiji.app/</scijava.app.directory>
+		<!--<scijava.app.directory>/home/haase/programs/fiji/Fiji.app/</scijava.app.directory>-->
 	</properties>
 
 	<dependencies>
@@ -122,6 +124,10 @@
 	</dependencies>
 
 	<repositories>
+    <repository>
+			<id>scijava.public</id>
+			<url>https://maven.scijava.org/content/groups/public</url>
+		</repository>
 		<repository>
 			<id>clij</id>
 			<url>http://dl.bintray.com/haesleinhuepf/clij</url>
