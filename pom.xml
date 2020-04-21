@@ -86,8 +86,7 @@
 		<url>https://github.com/clij/clij/issues</url>
 	</issueManagement>
 	<ciManagement>
-		<system>Travis CI</system>
-		<url>https://travis-ci.com/clij/clij-clearcl</url>
+		<system>None</system>
 	</ciManagement>
 
 	<properties>
