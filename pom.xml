@@ -93,7 +93,6 @@
 		<package-name>net.haesleinhuepf</package-name>
 		<license.licenseName>lgpl_3</license.licenseName>
 		<license.copyrightOwners>Loic A. Royer, CZ Biohub, Robert Haase, MPI CBG</license.copyrightOwners>
-		<releaseProfiles>deploy-to-scijava</releaseProfiles>
     <scijava.app.directory>C:/programs/fiji-win64/Fiji.app/</scijava.app.directory>
 		<!--<scijava.app.directory>/home/haase/programs/fiji/Fiji.app/</scijava.app.directory>-->
 	</properties>
