@@ -30,7 +30,7 @@
 #define MINMAX_TYPE long
 
 
-inline char2 read_buffer4dc(int read_buffer_width, int read_buffer_height, int read_buffer_depth, __global char * buffer_var, sampler_t sampler, int4 position )
+inline char2 read_buffer4dc(long read_buffer_width, long read_buffer_height, long read_buffer_depth, __global char * buffer_var, sampler_t sampler, int4 position )
 {
     int4 pos = (int4){position.x, position.y, position.z, position.w};
     if (true) { // if (CLK_ADDRESS_CLAMP_TO_EDGE & sampler) {
@@ -49,7 +49,7 @@ inline char2 read_buffer4dc(int read_buffer_width, int read_buffer_height, int r
     return (char2){buffer_var[pos_in_buffer],0};
 }
 
-inline uchar2 read_buffer4duc(int read_buffer_width, int read_buffer_height, int read_buffer_depth, __global uchar * buffer_var, sampler_t sampler, int4 position )
+inline uchar2 read_buffer4duc(long read_buffer_width, long read_buffer_height, long read_buffer_depth, __global uchar * buffer_var, sampler_t sampler, int4 position )
 {
     int4 pos = (int4){position.x, position.y, position.z, position.w};
     if (true) { // if (CLK_ADDRESS_CLAMP_TO_EDGE & sampler) {
@@ -68,7 +68,7 @@ inline uchar2 read_buffer4duc(int read_buffer_width, int read_buffer_height, int
     return (uchar2){buffer_var[pos_in_buffer],0};
 }
 
-inline short2 read_buffer4di(int read_buffer_width, int read_buffer_height, int read_buffer_depth, __global short * buffer_var, sampler_t sampler, int4 position )
+inline short2 read_buffer4di(long read_buffer_width, long read_buffer_height, long read_buffer_depth, __global short * buffer_var, sampler_t sampler, int4 position )
 {
     int4 pos = (int4){position.x, position.y, position.z, position.w};
     if (true) { // if (CLK_ADDRESS_CLAMP_TO_EDGE & sampler) {
@@ -87,7 +87,7 @@ inline short2 read_buffer4di(int read_buffer_width, int read_buffer_height, int 
     return (short2){buffer_var[pos_in_buffer],0};
 }
 
-inline ushort2 read_buffer4dui(int read_buffer_width, int read_buffer_height, int read_buffer_depth, __global ushort * buffer_var, sampler_t sampler, int4 position )
+inline ushort2 read_buffer4dui(long read_buffer_width, long read_buffer_height, long read_buffer_depth, __global ushort * buffer_var, sampler_t sampler, int4 position )
 {
     int4 pos = (int4){position.x, position.y, position.z, position.w};
     if (true) { // if (CLK_ADDRESS_CLAMP_TO_EDGE & sampler) {
@@ -106,7 +106,7 @@ inline ushort2 read_buffer4dui(int read_buffer_width, int read_buffer_height, in
     return (ushort2){buffer_var[pos_in_buffer],0};
 }
 
-inline float2 read_buffer4df(int read_buffer_width, int read_buffer_height, int read_buffer_depth, __global float* buffer_var, sampler_t sampler, int4 position )
+inline float2 read_buffer4df(long read_buffer_width, long read_buffer_height, long read_buffer_depth, __global float* buffer_var, sampler_t sampler, int4 position )
 {
     int4 pos = (int4){position.x, position.y, position.z, position.w};
     if (true) { // if (CLK_ADDRESS_CLAMP_TO_EDGE & sampler) {
@@ -172,7 +172,7 @@ inline void write_buffer4df(long write_buffer_width, long write_buffer_height, l
 
 
 
-inline char2 read_buffer3dc(int read_buffer_width, int read_buffer_height, int read_buffer_depth, __global char * buffer_var, sampler_t sampler, int4 position )
+inline char2 read_buffer3dc(long read_buffer_width, long read_buffer_height, long read_buffer_depth, __global char * buffer_var, sampler_t sampler, int4 position )
 {
     int4 pos = (int4){position.x, position.y, position.z, 0};
     if (true) { // if (CLK_ADDRESS_CLAMP_TO_EDGE & sampler) {
@@ -190,7 +190,7 @@ inline char2 read_buffer3dc(int read_buffer_width, int read_buffer_height, int r
     return (char2){buffer_var[pos_in_buffer],0};
 }
 
-inline uchar2 read_buffer3duc(int read_buffer_width, int read_buffer_height, int read_buffer_depth, __global uchar * buffer_var, sampler_t sampler, int4 position )
+inline uchar2 read_buffer3duc(long read_buffer_width, long read_buffer_height, long read_buffer_depth, __global uchar * buffer_var, sampler_t sampler, int4 position )
 {
     int4 pos = (int4){position.x, position.y, position.z, 0};
     if (true) { // if (CLK_ADDRESS_CLAMP_TO_EDGE & sampler) {
@@ -208,7 +208,7 @@ inline uchar2 read_buffer3duc(int read_buffer_width, int read_buffer_height, int
     return (uchar2){buffer_var[pos_in_buffer],0};
 }
 
-inline short2 read_buffer3di(int read_buffer_width, int read_buffer_height, int read_buffer_depth, __global short * buffer_var, sampler_t sampler, int4 position )
+inline short2 read_buffer3di(long read_buffer_width, long read_buffer_height, long read_buffer_depth, __global short * buffer_var, sampler_t sampler, int4 position )
 {
     int4 pos = (int4){position.x, position.y, position.z, 0};
     if (true) { // if (CLK_ADDRESS_CLAMP_TO_EDGE & sampler) {
@@ -226,7 +226,7 @@ inline short2 read_buffer3di(int read_buffer_width, int read_buffer_height, int 
     return (short2){buffer_var[pos_in_buffer],0};
 }
 
-inline ushort2 read_buffer3dui(int read_buffer_width, int read_buffer_height, int read_buffer_depth, __global ushort * buffer_var, sampler_t sampler, int4 position )
+inline ushort2 read_buffer3dui(long read_buffer_width, long read_buffer_height, long read_buffer_depth, __global ushort * buffer_var, sampler_t sampler, int4 position )
 {
     int4 pos = (int4){position.x, position.y, position.z, 0};
     if (true) { // if (CLK_ADDRESS_CLAMP_TO_EDGE & sampler) {
@@ -244,7 +244,7 @@ inline ushort2 read_buffer3dui(int read_buffer_width, int read_buffer_height, in
     return (ushort2){buffer_var[pos_in_buffer],0};
 }
 
-inline float2 read_buffer3df(int read_buffer_width, int read_buffer_height, int read_buffer_depth, __global float* buffer_var, sampler_t sampler, int4 position )
+inline float2 read_buffer3df(long read_buffer_width, long read_buffer_height, long read_buffer_depth, __global float* buffer_var, sampler_t sampler, int4 position )
 {
     int4 pos = (int4){position.x, position.y, position.z, 0};
     if (true) { // if (CLK_ADDRESS_CLAMP_TO_EDGE & sampler) {
@@ -307,7 +307,7 @@ inline void write_buffer3df(long write_buffer_width, long write_buffer_height, l
     buffer_var[pos_in_buffer] = value;
 }
 
-inline char2 read_buffer2dc(int read_buffer_width, int read_buffer_height, int read_buffer_depth, __global char * buffer_var, sampler_t sampler, int2 position )
+inline char2 read_buffer2dc(long read_buffer_width, long read_buffer_height, long read_buffer_depth, __global char * buffer_var, sampler_t sampler, int2 position )
 {
     int2 pos = (int2){position.x, position.y};
     if (true) { // if (CLK_ADDRESS_CLAMP_TO_EDGE & sampler) {
@@ -323,7 +323,7 @@ inline char2 read_buffer2dc(int read_buffer_width, int read_buffer_height, int r
     return (char2){buffer_var[pos_in_buffer],0};
 }
 
-inline uchar2 read_buffer2duc(int read_buffer_width, int read_buffer_height, int read_buffer_depth, __global uchar * buffer_var, sampler_t sampler, int2 position )
+inline uchar2 read_buffer2duc(long read_buffer_width, long read_buffer_height, long read_buffer_depth, __global uchar * buffer_var, sampler_t sampler, int2 position )
 {
     int2 pos = (int2){position.x, position.y};
     if (true) { // if (CLK_ADDRESS_CLAMP_TO_EDGE & sampler) {
@@ -339,7 +339,7 @@ inline uchar2 read_buffer2duc(int read_buffer_width, int read_buffer_height, int
     return (uchar2){buffer_var[pos_in_buffer],0};
 }
 
-inline short2 read_buffer2di(int read_buffer_width, int read_buffer_height, int read_buffer_depth, __global short * buffer_var, sampler_t sampler, int2 position )
+inline short2 read_buffer2di(long read_buffer_width, long read_buffer_height, long read_buffer_depth, __global short * buffer_var, sampler_t sampler, int2 position )
 {
     int2 pos = (int2){position.x, position.y};
     if (true) { // if (CLK_ADDRESS_CLAMP_TO_EDGE & sampler) {
@@ -355,7 +355,7 @@ inline short2 read_buffer2di(int read_buffer_width, int read_buffer_height, int 
     return (short2){buffer_var[pos_in_buffer],0};
 }
 
-inline ushort2 read_buffer2dui(int read_buffer_width, int read_buffer_height, int read_buffer_depth, __global ushort * buffer_var, sampler_t sampler, int2 position )
+inline ushort2 read_buffer2dui(long read_buffer_width, long read_buffer_height, long read_buffer_depth, __global ushort * buffer_var, sampler_t sampler, int2 position )
 {
     int2 pos = (int2){position.x, position.y};
     if (true) { // if (CLK_ADDRESS_CLAMP_TO_EDGE & sampler) {
