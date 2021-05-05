@@ -161,7 +161,7 @@ public class CLKernelExecutor {
      * Map of all parameters. It is recommended that input and output
      * images are given with the names "src" and "dst", respectively.
      *
-     * @param parameterMap
+     * @param parameterMap ?
      */
     public void setParameterMap(Map<String, Object> parameterMap) {
         this.parameterMap = parameterMap;

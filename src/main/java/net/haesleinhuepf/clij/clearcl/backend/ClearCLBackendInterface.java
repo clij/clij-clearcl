@@ -43,7 +43,7 @@ public interface ClearCLBackendInterface
   /**
    * Returns a platform name for a given platform peer pointer.
    * 
-   * @param pPlatformPeerPointer
+   * @param pPlatformPeerPointer ?
    * @return platform name
    */
   String getPlatformName(ClearCLPeerPointer pPlatformPeerPointer);
@@ -169,8 +169,8 @@ public interface ClearCLBackendInterface
   /**
    * Returns a device specification or limit (e.g. max global memory)
    * 
-   * @param pDevicePointer
-   * @param pDeviceSpec
+   * @param pDevicePointer ?
+   * @param pDeviceSpec ?
    * @return specification or limit
    */
   long getDeviceInfo(ClearCLPeerPointer pDevicePointer,
@@ -196,7 +196,7 @@ public interface ClearCLBackendInterface
    * @param pContextPeerPointer
    *          context peer pointer
    * @param pInOrder
-   *          true -> queue keep enqueued tasks in order, false otherwise
+   *          true queue keep enqueued tasks in order, false otherwise
    * @return queue peer pointer
    */
   ClearCLPeerPointer getQueuePeerPointer(ClearCLPeerPointer pDevicePeerPointer,
@@ -343,6 +343,7 @@ public interface ClearCLBackendInterface
    *
    * @param pKernelPeerPointer
    *          kernel peer pointer
+   * @return ?
    */
   int getNumberOfKernelArguments(ClearCLPeerPointer pKernelPeerPointer);
 
@@ -353,6 +354,7 @@ public interface ClearCLBackendInterface
    *          kernel peer pointer
    * @param pIndex
    *          argument index
+   * @return ?
    */
   String getKernelArgumentName(ClearCLPeerPointer pKernelPeerPointer,
                                int pIndex);
@@ -388,10 +390,10 @@ public interface ClearCLBackendInterface
    *          queue peer pointer
    * @param pBufferPeerPointer
    *          buffer peer pointer
-   * @param pBlockingRead
-   * @param pOffsetInBuffer
-   * @param pLengthInBuffer
-   * @param pHostMemPointer
+   * @param pBlockingRead ?
+   * @param pOffsetInBuffer ?
+   * @param pLengthInBuffer ?
+   * @param pHostMemPointer ?
    */
   void enqueueReadFromBuffer(ClearCLPeerPointer pQueuePeerPointer,
                              ClearCLPeerPointer pBufferPeerPointer,
@@ -407,10 +409,10 @@ public interface ClearCLBackendInterface
    *          queue peer pointer
    * @param pBufferPeerPointer
    *          buffer peer pointer
-   * @param pBlockingWrite
-   * @param pOffsetInBuffer
-   * @param pLengthInBytes
-   * @param pHostMemPeerPointer
+   * @param pBlockingWrite ?
+   * @param pOffsetInBuffer ?
+   * @param pLengthInBytes ?
+   * @param pHostMemPeerPointer ?
    */
   void enqueueWriteToBuffer(ClearCLPeerPointer pQueuePeerPointer,
                             ClearCLPeerPointer pBufferPeerPointer,
@@ -426,11 +428,11 @@ public interface ClearCLBackendInterface
    *          queue peer pointer
    * @param pBufferPeerPointer
    *          buffer peer pointer
-   * @param pBlockingRead
-   * @param pBufferOrigin
-   * @param pHostOrigin
-   * @param pRegion
-   * @param pHostMemPeerPointer
+   * @param pBlockingRead ?
+   * @param pBufferOrigin ?
+   * @param pHostOrigin ?
+   * @param pRegion ?
+   * @param pHostMemPeerPointer ?
    */
   void enqueueReadFromBufferRegion(ClearCLPeerPointer pQueuePeerPointer,
                                    ClearCLPeerPointer pBufferPeerPointer,
@@ -447,11 +449,11 @@ public interface ClearCLBackendInterface
    *          queue peer pointer
    * @param pBufferPeerPointer
    *          buffer peer pointer
-   * @param pBlockingWrite
-   * @param pBufferOrigin
-   * @param pHostOrigin
-   * @param pRegion
-   * @param pHostMemPeerPointer
+   * @param pBlockingWrite ?
+   * @param pBufferOrigin ?
+   * @param pHostOrigin ?
+   * @param pRegion ?
+   * @param pHostMemPeerPointer ?
    */
   void enqueueWriteToBufferRegion(ClearCLPeerPointer pQueuePeerPointer,
                                   ClearCLPeerPointer pBufferPeerPointer,
@@ -468,10 +470,10 @@ public interface ClearCLBackendInterface
    *          queue peer pointer
    * @param pBufferPeerPointer
    *          buffer peer
-   * @param pBlockingFill
-   * @param pOffsetInBytes
-   * @param pLengthInBytes
-   * @param pPattern
+   * @param pBlockingFill ?
+   * @param pOffsetInBytes ?
+   * @param pLengthInBytes ?
+   * @param pPattern ?
    */
   void enqueueFillBuffer(ClearCLPeerPointer pQueuePeerPointer,
                          ClearCLPeerPointer pBufferPeerPointer,
@@ -489,10 +491,10 @@ public interface ClearCLBackendInterface
    *          source buffer peer pointer
    * @param pDstBufferPeerPointer
    *          destination buffer peer pointer
-   * @param pBlockingCopy
-   * @param pSrcOffsetInBytes
-   * @param pDstOffsetInBytes
-   * @param pLengthToCopyInBytes
+   * @param pBlockingCopy ?
+   * @param pSrcOffsetInBytes ?
+   * @param pDstOffsetInBytes ?
+   * @param pLengthToCopyInBytes ?
    */
   void enqueueCopyBuffer(ClearCLPeerPointer pQueuePeerPointer,
                          ClearCLPeerPointer pSrcBufferPeerPointer,
@@ -511,10 +513,10 @@ public interface ClearCLBackendInterface
    *          source buffer peer pointer
    * @param pDstBufferPeerPointer
    *          destination buffer peer pointer
-   * @param pBlockingCopy
-   * @param pSrcOrigin
-   * @param pDstOrigin
-   * @param pRegion
+   * @param pBlockingCopy ?
+   * @param pSrcOrigin ?
+   * @param pDstOrigin ?
+   * @param pRegion ?
    */
   void enqueueCopyBufferRegion(ClearCLPeerPointer pQueuePeerPointer,
                                ClearCLPeerPointer pSrcBufferPeerPointer,
@@ -533,10 +535,10 @@ public interface ClearCLBackendInterface
    *          source buffer peer pointer
    * @param pDstImagePeerPointer
    *          destination image peer pointer
-   * @param pBlockingCopy
-   * @param pSrcOffsetInBytes
-   * @param pDstOrigin
-   * @param pDstRegion
+   * @param pBlockingCopy ?
+   * @param pSrcOffsetInBytes ?
+   * @param pDstOrigin ?
+   * @param pDstRegion ?
    */
   void enqueueCopyBufferToImage(ClearCLPeerPointer pQueuePeerPointer,
                                 ClearCLPeerPointer pSrcBufferPeerPointer,
@@ -555,10 +557,10 @@ public interface ClearCLBackendInterface
    *          source image peer pointer
    * @param pDstBufferPeerPointer
    *          destination buffer peer pointer
-   * @param pBlockingCopy
-   * @param pSrcOrigin
-   * @param pSrcRegion
-   * @param pDstOffset
+   * @param pBlockingCopy ?
+   * @param pSrcOrigin ?
+   * @param pSrcRegion ?
+   * @param pDstOffset ?
    */
   void enqueueCopyImageToBuffer(ClearCLPeerPointer pQueuePeerPointer,
                                 ClearCLPeerPointer pSrcImagePeerPointer,
@@ -575,9 +577,9 @@ public interface ClearCLBackendInterface
    *          queue peer pointer
    * @param pImagePeerPointer
    *          image peer pointer
-   * @param pReadWrite
-   * @param pOrigin
-   * @param pRegion
+   * @param pReadWrite ?
+   * @param pOrigin ?
+   * @param pRegion ?
    * @param pHostMemPeerPointer
    *          host memory peer pointer
    */
@@ -595,9 +597,9 @@ public interface ClearCLBackendInterface
    *          queue peer pointer
    * @param pImagePeerPointer
    *          image peer pointer
-   * @param pBlockingWrite
-   * @param pOrigin
-   * @param pRegion
+   * @param pBlockingWrite ?
+   * @param pOrigin ?
+   * @param pRegion ?
    * @param pHostMemPeerPointer
    *          host memory peer pointer
    */
@@ -615,10 +617,10 @@ public interface ClearCLBackendInterface
    *          queue peer pointer
    * @param pImagePeerPointer
    *          image peer pointer
-   * @param pBlockingFill
-   * @param pOrigin
-   * @param pRegion
-   * @param pColor
+   * @param pBlockingFill ?
+   * @param pOrigin ?
+   * @param pRegion ?
+   * @param pColor ?
    */
   void enqueueFillImage(ClearCLPeerPointer pQueuePeerPointer,
                         ClearCLPeerPointer pImagePeerPointer,
@@ -636,10 +638,10 @@ public interface ClearCLBackendInterface
    *          source image peer pointer
    * @param pDstImagePeerPointer
    *          destination image peer pointer
-   * @param pBlockingCopy
-   * @param pSrcOrigin
-   * @param pDstOrigin
-   * @param pRegion
+   * @param pBlockingCopy ?
+   * @param pSrcOrigin ?
+   * @param pDstOrigin ?
+   * @param pRegion ?
    */
   void enqueueCopyImage(ClearCLPeerPointer pQueuePeerPointer,
                         ClearCLPeerPointer pSrcImagePeerPointer,

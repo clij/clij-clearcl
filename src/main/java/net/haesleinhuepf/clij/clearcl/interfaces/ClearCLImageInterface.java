@@ -23,7 +23,7 @@ public interface ClearCLImageInterface extends ClearCLMemInterface
    * @param pImage
    *          destination image
    * @param pBlockingWrite
-   *          true -> blocking call, false -> asynchronous call
+   *          trueblocking call, false asynchronous call
    */
   void copyTo(ClearCLImage pImage, boolean pBlockingWrite);
 
@@ -33,7 +33,7 @@ public interface ClearCLImageInterface extends ClearCLMemInterface
    * @param pBuffer
    *          destination buffer
    * @param pBlockingWrite
-   *          true -> blocking call, false -> asynchronous call
+   *          trueblocking call, false asynchronous call
    */
   void copyTo(ClearCLBuffer pBuffer, boolean pBlockingWrite);
 
@@ -43,7 +43,7 @@ public interface ClearCLImageInterface extends ClearCLMemInterface
    * @param pContiguousMemory
    *          contiguous memory
    * @param pBlockingWrite
-   *          true -> blocking call, false -> asynchronous call
+   *          trueblocking call, false asynchronous call
    */
   void writeTo(ContiguousMemoryInterface pContiguousMemory,
                boolean pBlockingWrite);
@@ -54,7 +54,7 @@ public interface ClearCLImageInterface extends ClearCLMemInterface
    * @param pBuffer
    *          NIO buffer
    * @param pBlockingWrite
-   *          true -> blocking call, false -> asynchronous call
+   *          trueblocking call, false asynchronous call
    */
   void writeTo(Buffer pBuffer, boolean pBlockingWrite);
 
@@ -64,7 +64,7 @@ public interface ClearCLImageInterface extends ClearCLMemInterface
    * @param pContiguousMemory
    *          contiguous memory
    * @param pBlockingRead
-   *          true -> blocking call, false -> asynchronous call
+   *          trueblocking call, false asynchronous call
    */
   void readFrom(ContiguousMemoryInterface pContiguousMemory,
                 boolean pBlockingRead);
@@ -75,7 +75,7 @@ public interface ClearCLImageInterface extends ClearCLMemInterface
    * @param pBuffer
    *          NIO buffer
    * @param pBlockingRead
-   *          true -> blocking call, false -> asynchronous call
+   *          trueblocking call, false asynchronous call
    */
   void readFrom(Buffer pBuffer, boolean pBlockingRead);
 

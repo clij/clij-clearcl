@@ -50,7 +50,7 @@ public class ElapsedTime
    * used to switch of the timing.
    * 
    * @param pActive
-   *          true -> measure, false -> execute without measuring
+   *          true measure, false execute without measuring
    * @param pDescription
    *          description of the code (runnable)
    * @param pRunnable
@@ -69,7 +69,7 @@ public class ElapsedTime
    * used to switch of the timing.
    * 
    * @param pActive
-   *          true -> measure, false -> execute without measuring
+   *          true measure, false execute without measuring
    * @param pForceOutput
    *          forces output to standard out
    * @param pDescription

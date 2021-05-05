@@ -27,7 +27,7 @@ public interface ClearCLMemInterface extends SizedInBytes
    * Calling this method notifies listeners that the contents of this OpenCL
    * object might have changed.
    * 
-   * @param pQueue
+   * @param pQueue ?
    */
   void notifyListenersOfChange(ClearCLQueue pQueue);
 

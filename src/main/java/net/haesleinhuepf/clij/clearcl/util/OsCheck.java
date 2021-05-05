@@ -48,8 +48,6 @@ public final class OsCheck
    * result
    * 
    * @return os type
-   * 
-   * @returns - the operating system detected
    */
   public static OSType getOperatingSystemType()
   {

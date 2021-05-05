@@ -567,7 +567,7 @@ public class ClearCLContext implements Cleanable, Closeable
    * stack trace every time a buffer or image is allocated. this is practical to
    * detect OpenCl memory trashing/leaking
    * 
-   * @return true -> debug messages, false -> no debug messages
+   * @return true debug messages, false no debug messages
    */
   public boolean isDebugNotifyAllocation()
   {
@@ -578,7 +578,7 @@ public class ClearCLContext implements Cleanable, Closeable
    * Sets the debug allocation notification flag.
    * 
    * @param pDebugNotifyAllocation
-   *          true -> debug messages, false -> no debug messages
+   *          true debug messages, false no debug messages
    */
   public void setDebugNotifyAllocation(boolean pDebugNotifyAllocation)
   {

@@ -85,9 +85,9 @@ public class ClearCLImage extends ClearCLMemBase implements
    * Fills this image with zeros.
    * 
    * @param pBlockingFill
-   *          true -> blocking call, false -> asynchronous call
+   *          true blocking call, false asynchronous call
    * @param pNotifyListeners
-   *          true -> notify listeners, false -> do not notify
+   *          true notify listeners, false do not notify
    */
 
   public void fillZero(boolean pBlockingFill,
@@ -105,9 +105,9 @@ public class ClearCLImage extends ClearCLMemBase implements
    * @param pColor
    *          single channel float color
    * @param pBlockingFill
-   *          true -> blocking call, false -> asynchronous call
+   *          true blocking call, false asynchronous call
    * @param pNotifyListeners
-   *          true -> notify listeners, false -> do not notify
+   *          true notify listeners, false do not notify
    */
   public void fill(float pColor,
                    boolean pBlockingFill,
@@ -127,9 +127,9 @@ public class ClearCLImage extends ClearCLMemBase implements
    * @param pColor
    *          single channel int color
    * @param pBlockingFill
-   *          true -> blocking call, false -> asynchronous call
+   *          true blocking call, false asynchronous call
    * @param pNotifyListeners
-   *          true -> notify listeners, false -> do not notify
+   *          true notify listeners, false do not notify
    */
   public void fill(int pColor,
                    boolean pBlockingFill,
@@ -149,9 +149,9 @@ public class ClearCLImage extends ClearCLMemBase implements
    * @param pRGBA
    *          four float color
    * @param pBlockingFill
-   *          true -> blocking call, false -> asynchronous call
+   *          true blocking call, false asynchronous call
    * @param pNotifyListeners
-   *          true -> notify listeners, false -> do not notify
+   *          true notify listeners, false do not notify
    */
   public void fill(float[] pRGBA,
                    boolean pBlockingFill,
@@ -170,9 +170,9 @@ public class ClearCLImage extends ClearCLMemBase implements
    * @param pRGBA
    *          four int color
    * @param pBlockingFill
-   *          true -> blocking call, false -> asynchronous call
+   *          true blocking call, false asynchronous call
    * @param pNotifyListeners
-   *          true -> notify listeners, false -> do not notify
+   *          true notify listeners, false do not notify
    */
   public void fill(int[] pRGBA,
                    boolean pBlockingFill,
@@ -195,9 +195,9 @@ public class ClearCLImage extends ClearCLMemBase implements
    * @param pRegion
    *          region dimensions
    * @param pBlockingFill
-   *          true -> blocking call, false -> asynchronous call
+   *          true blocking call, false asynchronous call
    * @param pNotifyListeners
-   *          true -> notify listeners, false -> do not notify
+   *          true notify listeners, false do not notify
    */
   public void fill(float[] pRGBA,
                    long[] pOrigin,
@@ -225,9 +225,9 @@ public class ClearCLImage extends ClearCLMemBase implements
    * @param pRegion
    *          region dimensions
    * @param pBlockingFill
-   *          true -> blocking call, false -> asynchronous call
+   *          true blocking call, false asynchronous call
    * @param pNotifyListeners
-   *          true -> notify listeners, false -> do not notify
+   *          true notify listeners, false do not notify
    */
   public void fill(int[] pRGBA,
                    long[] pOrigin,
@@ -265,9 +265,9 @@ public class ClearCLImage extends ClearCLMemBase implements
    * @param pRegion
    *          region dimensions
    * @param pBlockingFill
-   *          true -> blocking call, false -> asynchronous call
+   *          true blocking call, false asynchronous call
    * @param pNotifyListeners
-   *          true -> notify listeners, false -> do not notify
+   *          true notify listeners, false do not notify
    */
   private void fillInternal(int[] pRGBA,
                             long[] pOrigin,
@@ -308,7 +308,7 @@ public class ClearCLImage extends ClearCLMemBase implements
    * @param pDstImage
    *          destination image
    * @param pBlockingCopy
-   *          true -> blocking call, false -> asynchronous call
+   *          true blocking call, false asynchronous call
    */
   public void copyTo(ClearCLImage pDstImage, boolean pBlockingCopy)
   {
@@ -332,7 +332,7 @@ public class ClearCLImage extends ClearCLMemBase implements
    * @param pRegion
    *          region dimensions
    * @param pBlockingCopy
-   *          true -> blocking call, false -> asynchronous call
+   *          true blocking call, false asynchronous call
    */
   public void copyTo(ClearCLImage pDstImage,
                      long[] pOriginInSrcImage,
@@ -357,7 +357,7 @@ public class ClearCLImage extends ClearCLMemBase implements
    * @param pDstBuffer
    *          destination buffer
    * @param pBlockingCopy
-   *          true -> blocking call, false -> asynchronous call
+   *          true blocking call, false asynchronous call
    */
   public void copyTo(ClearCLBuffer pDstBuffer, boolean pBlockingCopy)
   {
@@ -381,7 +381,7 @@ public class ClearCLImage extends ClearCLMemBase implements
    * @param pOffsetInDstBuffer
    *          offset in destination buffer in elements
    * @param pBlockingCopy
-   *          true -> blocking call, false -> asynchronous call
+   *          true blocking call, false asynchronous call
    */
   public void copyTo(ClearCLBuffer pDstBuffer,
                      long[] pOriginInSrcImage,
@@ -408,7 +408,7 @@ public class ClearCLImage extends ClearCLMemBase implements
    * @param pClearCLHostImage
    *          host image.
    * @param pBlockingCopy
-   *          true -> blocking call, false -> asynchronous call
+   *          true blocking call, false asynchronous call
    */
   public void copyTo(ClearCLHostImageBuffer pClearCLHostImage,
                      boolean pBlockingCopy)
@@ -437,7 +437,7 @@ public class ClearCLImage extends ClearCLMemBase implements
    * @param pBuffer
    *          NIO buffer
    * @param pBlockingRead
-   *          true -> blocking call, false -> asynchronous call
+   *          true blocking call, false asynchronous call
    */
   @Override
   public void writeTo(Buffer pBuffer, boolean pBlockingRead)
@@ -454,7 +454,7 @@ public class ClearCLImage extends ClearCLMemBase implements
    * @param pContiguousMemory
    *          CoreMem buffer
    * @param pBlockingRead
-   *          true -> blocking call, false -> asynchronous call
+   *          true blocking call, false asynchronous call
    */
   @Override
   public void writeTo(ContiguousMemoryInterface pContiguousMemory,
@@ -476,7 +476,7 @@ public class ClearCLImage extends ClearCLMemBase implements
    * @param pRegion
    *          region dimensions in image
    * @param pBlockingRead
-   *          true -> blocking call, false -> asynchronous call
+   *          true blocking call, false asynchronous call
    */
   public void writeTo(ContiguousMemoryInterface pContiguousMemory,
                       long[] pOrigin,
@@ -512,7 +512,7 @@ public class ClearCLImage extends ClearCLMemBase implements
    * @param pRegion
    *          region dimensions in image
    * @param pBlockingRead
-   *          true -> blocking call, false -> asynchronous call
+   *          true blocking call, false asynchronous call
    */
   public void writeTo(Buffer pBuffer,
                       long[] pOrigin,
@@ -550,7 +550,7 @@ public class ClearCLImage extends ClearCLMemBase implements
    * @param pRegion
    *          region dimensions in image
    * @param pBlockingRead
-   *          true -> blocking call, false -> asynchronous call
+   *          true blocking call, false asynchronous call
    */
   public void readFrom(ContiguousMemoryInterface pContiguousMemory,
                        long[] pOrigin,
@@ -583,7 +583,7 @@ public class ClearCLImage extends ClearCLMemBase implements
    * @param pContiguousMemory
    *          CoreMem buffer
    * @param pBlockingRead
-   *          true -> blocking call, false -> asynchronous call
+   *          true blocking call, false asynchronous call
    */
   @Override
   public void readFrom(ContiguousMemoryInterface pContiguousMemory,
@@ -607,7 +607,7 @@ public class ClearCLImage extends ClearCLMemBase implements
    * @param pRegion
    *          region dimensions in image
    * @param pBlockingRead
-   *          true -> blocking call, false -> asynchronous call
+   *          true blocking call, false asynchronous call
    */
   public void readFrom(FragmentedMemoryInterface pFragmentedMemory,
                        long[] pOrigin,
@@ -685,7 +685,7 @@ public class ClearCLImage extends ClearCLMemBase implements
    * @param pFragmentedMemory
    *          CoreMem fragmented buffer
    * @param pBlockingRead
-   *          true -> blocking call, false -> asynchronous call
+   *          true blocking call, false asynchronous call
    */
   public void readFrom(FragmentedMemoryInterface pFragmentedMemory,
                        boolean pBlockingRead)
@@ -706,7 +706,7 @@ public class ClearCLImage extends ClearCLMemBase implements
    * @param pRegion
    *          region dimensions in image
    * @param pBlockingRead
-   *          true -> blocking call, false -> asynchronous call
+   *          true blocking call, false asynchronous call
    */
   public void readFrom(Buffer pBuffer,
                        long[] pOrigin,
@@ -741,7 +741,7 @@ public class ClearCLImage extends ClearCLMemBase implements
    * @param pBuffer
    *          NIO buffer
    * @param pBlockingRead
-   *          true -> blocking call, false -> asynchronous call
+   *          true blocking call, false asynchronous call
    */
   @Override
   public void readFrom(Buffer pBuffer, boolean pBlockingRead)
@@ -758,7 +758,7 @@ public class ClearCLImage extends ClearCLMemBase implements
    * @param pByteArray
    *          byte array
    * @param pBlockingRead
-   *          true -> blocking call, false -> asynchronous call
+   *          true blocking call, false asynchronous call
    * @return temp offheap memory object used to transfer the data.
    */
   public OffHeapMemory readFrom(byte[] pByteArray,
@@ -783,7 +783,7 @@ public class ClearCLImage extends ClearCLMemBase implements
    * @param pCharArray
    *          char array
    * @param pBlockingRead
-   *          true -> blocking call, false -> asynchronous call
+   *          true blocking call, false asynchronous call
    * @return temp offheap memory object used to transfer the data.
    */
   public OffHeapMemory readFrom(char[] pCharArray,
@@ -808,7 +808,7 @@ public class ClearCLImage extends ClearCLMemBase implements
    * @param pShortsArray
    *          short array
    * @param pBlockingRead
-   *          true -> blocking call, false -> asynchronous call
+   *          true blocking call, false asynchronous call
    * @return temp offheap memory object used to transfer the data.
    */
   public OffHeapMemory readFrom(short[] pShortsArray,
@@ -833,7 +833,7 @@ public class ClearCLImage extends ClearCLMemBase implements
    * @param pIntArray
    *          int array
    * @param pBlockingRead
-   *          true -> blocking call, false -> asynchronous call
+   *          true blocking call, false asynchronous call
    * @return temp offheap memory object used to transfer the data.
    */
   public OffHeapMemory readFrom(int[] pIntArray,
@@ -858,7 +858,7 @@ public class ClearCLImage extends ClearCLMemBase implements
    * @param pLongArray
    *          long array
    * @param pBlockingRead
-   *          true -> blocking call, false -> asynchronous call
+   *          true blocking call, false asynchronous call
    * @return temp offheap memory object used to transfer the data.
    */
   public OffHeapMemory readFrom(long[] pLongArray,
@@ -883,7 +883,7 @@ public class ClearCLImage extends ClearCLMemBase implements
    * @param pFloatArray
    *          float array
    * @param pBlockingRead
-   *          true -> blocking call, false -> asynchronous call
+   *          true blocking call, false asynchronous call
    * @return temp offheap memory object used to transfer the data.
    */
   public OffHeapMemory readFrom(float[] pFloatArray,
@@ -908,7 +908,7 @@ public class ClearCLImage extends ClearCLMemBase implements
    * @param pDoubleArray
    *          double array
    * @param pBlockingRead
-   *          true -> blocking call, false -> asynchronous call
+   *          true blocking call, false asynchronous call
    * @return temp offheap memory object used to transfer the data.
    */
   public OffHeapMemory readFrom(double[] pDoubleArray,

@@ -97,7 +97,7 @@ public class Benchmark
    * @param pBenchmarkTest
    *          benchmark type.
    * @param pRepeats
-   *          number of repeats (for high accuracy > 1000)
+   *          number of repeats (for high accuracy larger than 1000)
    * @return fastest device
    */
   public static ClearCLDevice getFastestDevice(ArrayList<ClearCLDevice> pDevices,

@@ -76,7 +76,7 @@ public class ClearCLBuffer extends ClearCLMemBase implements
    * @param pByte
    *          byte to fill buffer with
    * @param pBlockingFill
-   *          true -> blocking call, false -> asynchronous call
+   *          true blocking call, false asynchronous call
    */
   public void fill(byte pByte, boolean pBlockingFill)
   {
@@ -91,7 +91,7 @@ public class ClearCLBuffer extends ClearCLMemBase implements
    * @param pPattern
    *          pattern as a sequence of bytes
    * @param pBlockingFill
-   *          true -> blocking call, false -> asynchronous call
+   *          true blocking call, false asynchronous call
    */
   public void fill(byte[] pPattern, boolean pBlockingFill)
   {
@@ -110,7 +110,7 @@ public class ClearCLBuffer extends ClearCLMemBase implements
    * @param pLengthInBuffer
    *          length in buffer in elements
    * @param pBlockingFill
-   *          true -> blocking call, false -> asynchronous call
+   *          true blocking call, false asynchronous call
    */
   public void fill(byte[] pPattern,
                    long pOffsetInBuffer,
@@ -136,7 +136,7 @@ public class ClearCLBuffer extends ClearCLMemBase implements
    * @param pDstBuffer
    *          destination buffer
    * @param pBlockingCopy
-   *          true -> blocking call, false -> asynchronous call
+   *          true blocking call, false asynchronous call
    */
   public void copyTo(ClearCLBuffer pDstBuffer, boolean pBlockingCopy)
   {
@@ -160,7 +160,7 @@ public class ClearCLBuffer extends ClearCLMemBase implements
    * @param pLengthInElements
    *          copy length in elements
    * @param pBlockingCopy
-   *          true -> blocking call, false -> asynchronous call
+   *          true blocking call, false asynchronous call
    */
   public void copyTo(ClearCLBuffer pDstBuffer,
                      long pOffsetInSrcBuffer,
@@ -199,7 +199,7 @@ public class ClearCLBuffer extends ClearCLMemBase implements
    * @param pRegion
    *          region to copy
    * @param pBlockingCopy
-   *          true -> blocking call, false -> asynchronous call
+   *          true blocking call, false asynchronous call
    */
   public void copyTo(ClearCLBuffer pDstBuffer,
                      long[] pOriginInSrcBuffer,
@@ -224,7 +224,7 @@ public class ClearCLBuffer extends ClearCLMemBase implements
    * @param pDstImage
    *          destination image
    * @param pBlockingCopy
-   *          true -> blocking call, false -> asynchronous call
+   *          true blocking call, false asynchronous call
    */
   public void copyTo(ClearCLImage pDstImage, boolean pBlockingCopy)
   {
@@ -248,7 +248,7 @@ public class ClearCLBuffer extends ClearCLMemBase implements
    * @param pDstRegion
    *          destination region
    * @param pBlockingCopy
-   *          true -> blocking call, false -> asynchronous call
+   *          true blocking call, false asynchronous call
    */
   public void copyTo(ClearCLImage pDstImage,
                      long pOffsetInSrcBuffer,
@@ -274,7 +274,7 @@ public class ClearCLBuffer extends ClearCLMemBase implements
    * @param pClearCLHostImage
    *          host image.
    * @param pBlockingCopy
-   *          true -> blocking call, false -> asynchronous call
+   *          true blocking call, false asynchronous call
    */
   public void copyTo(ClearCLHostImageBuffer pClearCLHostImage,
                      boolean pBlockingCopy)
@@ -301,7 +301,7 @@ public class ClearCLBuffer extends ClearCLMemBase implements
    * @param pContiguousMemory
    *          destination CoreMem buffer
    * @param pBlockingWrite
-   *          true -> blocking call, false -> asynchronous call
+   *          true blocking call, false asynchronous call
    */
   @Override
   public void writeTo(ContiguousMemoryInterface pContiguousMemory,
@@ -324,7 +324,7 @@ public class ClearCLBuffer extends ClearCLMemBase implements
    * @param pLengthInBuffer
    *          length to write in elements
    * @param pBlockingWrite
-   *          true -> blocking call, false -> asynchronous call
+   *          true blocking call, false asynchronous call
    */
   public void writeTo(ContiguousMemoryInterface pContiguousMemory,
                       long pOffsetInBuffer,
@@ -358,7 +358,7 @@ public class ClearCLBuffer extends ClearCLMemBase implements
    * @param pBuffer
    *          destination NIO buffer
    * @param pBlockingWrite
-   *          true -> blocking call, false -> asynchronous call
+   *          true blocking call, false asynchronous call
    */
   @Override
   public void writeTo(Buffer pBuffer, boolean pBlockingWrite)
@@ -379,7 +379,7 @@ public class ClearCLBuffer extends ClearCLMemBase implements
    * @param pLengthInBuffer
    *          length to write in elements
    * @param pBlockingWrite
-   *          true -> blocking call, false -> asynchronous call
+   *          true blocking call, false asynchronous call
    */
   public void writeTo(Buffer pBuffer,
                       long pOffsetInBuffer,
@@ -412,7 +412,7 @@ public class ClearCLBuffer extends ClearCLMemBase implements
    * @param pContiguousMemory
    *          source NIO buffer
    * @param pBlockingRead
-   *          true -> blocking call, false -> asynchronous call
+   *          true blocking call, false asynchronous call
    */
   @Override
   public void readFrom(ContiguousMemoryInterface pContiguousMemory,
@@ -434,7 +434,7 @@ public class ClearCLBuffer extends ClearCLMemBase implements
    * @param pLengthInBuffer
    *          length to read in elements
    * @param pBlockingRead
-   *          true -> blocking call, false -> asynchronous call
+   *          true blocking call, false asynchronous call
    */
   public void readFrom(ContiguousMemoryInterface pContiguousMemory,
                        long pOffsetInBuffer,
@@ -469,7 +469,7 @@ public class ClearCLBuffer extends ClearCLMemBase implements
    * @param pBuffer
    *          source NIO buffer
    * @param pBlockingRead
-   *          true -> blocking call, false -> asynchronous call
+   *          true blocking call, false asynchronous call
    */
   @Override
   public void readFrom(Buffer pBuffer, boolean pBlockingRead)
@@ -490,7 +490,7 @@ public class ClearCLBuffer extends ClearCLMemBase implements
    * @param pLengthInBuffer
    *          length to read in elements
    * @param pBlockingRead
-   *          true -> blocking call, false -> asynchronous call
+   *          true blocking call, false asynchronous call
    */
   public void readFrom(Buffer pBuffer,
                        long pOffsetInBuffer,
@@ -531,7 +531,7 @@ public class ClearCLBuffer extends ClearCLMemBase implements
    * @param pRegion
    *          region to write
    * @param pBlockingWrite
-   *          true -> blocking call, false -> asynchronous call
+   *          true blocking call, false asynchronous call
    */
   public void writeTo(ContiguousMemoryInterface pContiguousMemory,
                       long[] pSourceOrigin,
@@ -568,7 +568,7 @@ public class ClearCLBuffer extends ClearCLMemBase implements
    * @param pRegion
    *          region to write
    * @param pBlockingWrite
-   *          true -> blocking call, false -> asynchronous call
+   *          true blocking call, false asynchronous call
    */
   public void writeTo(Buffer pBuffer,
                       long[] pSourceOrigin,
@@ -604,7 +604,7 @@ public class ClearCLBuffer extends ClearCLMemBase implements
    * @param pRegion
    *          region to read
    * @param pBlockingRead
-   *          true -> blocking call, false -> asynchronous call
+   *          true blocking call, false asynchronous call
    */
   public void readFrom(ContiguousMemoryInterface pContiguousMemory,
                        long[] pSourceOrigin,
@@ -643,7 +643,7 @@ public class ClearCLBuffer extends ClearCLMemBase implements
    * @param pRegion
    *          region to read
    * @param pBlockingRead
-   *          true -> blocking call, false -> asynchronous call
+   *          true blocking call, false asynchronous call
    */
   public void readFrom(Buffer pBuffer,
                        long[] pSourceOrigin,
