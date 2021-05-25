@@ -134,6 +134,14 @@ public class CLKernelExecutor {
             return "short";
         } else if (pDType == NativeTypeEnum.UnsignedShort) {
             return "ushort";
+        } else if (pDType == NativeTypeEnum.Int) {
+            return "int";
+        } else if (pDType == NativeTypeEnum.UnsignedInt) {
+            return "uint";
+        } else if (pDType == NativeTypeEnum.Long) {
+            return "long";
+        } else if (pDType == NativeTypeEnum.UnsignedLong) {
+            return "ulong";
         } else if (pDType == NativeTypeEnum.Float) {
             return "float";
         } else {
@@ -147,9 +155,17 @@ public class CLKernelExecutor {
         } else if (pDType == NativeTypeEnum.UnsignedByte) {
             return "uc";
         } else if (pDType == NativeTypeEnum.Short) {
-            return "i";
+            return "s";
         } else if (pDType == NativeTypeEnum.UnsignedShort) {
+            return "us";
+        } else if (pDType == NativeTypeEnum.Int) {
+            return "i";
+        } else if (pDType == NativeTypeEnum.UnsignedInt) {
             return "ui";
+        } else if (pDType == NativeTypeEnum.Long) {
+            return "l";
+        } else if (pDType == NativeTypeEnum.UnsignedLong) {
+            return "ul";
         } else if (pDType == NativeTypeEnum.Float) {
             return "f";
         } else {
