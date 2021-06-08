@@ -79,6 +79,18 @@ public class CLKernelExecutor {
                 defines.put("IMAGE_" + key + "_PIXEL_TYPE", "char");
                 defines.put("CONVERT_" + key + "_PIXEL_TYPE(parameter)", "clij_convert_char_sat(parameter)");
                 break;
+            case UnsignedInt16:
+                defines.put("IMAGE_" + key + "_PIXEL_TYPE", "ushort");
+                defines.put("CONVERT_" + key + "_PIXEL_TYPE(parameter)", "clij_convert_ushort_sat(parameter)");
+                break;
+            case SignedInt16:
+                defines.put("IMAGE_" + key + "_PIXEL_TYPE", "short");
+                defines.put("CONVERT_" + key + "_PIXEL_TYPE(parameter)", "clij_convert_short_sat(parameter)");
+                break;
+            case UnsignedInt32:
+                defines.put("IMAGE_" + key + "_PIXEL_TYPE", "uint");
+                defines.put("CONVERT_" + key + "_PIXEL_TYPE(parameter)", "clij_convert_uint_sat(parameter)");
+                break;
             case SignedInt32:
                 defines.put("IMAGE_" + key + "_PIXEL_TYPE", "int");
                 defines.put("CONVERT_" + key + "_PIXEL_TYPE(parameter)", "clij_convert_int_sat(parameter)");
@@ -145,6 +157,7 @@ public class CLKernelExecutor {
         } else if (pDType == NativeTypeEnum.Float) {
             return "float";
         } else {
+            System.out.println("No type name available for " + pDType);
             return "";
         }
     }
